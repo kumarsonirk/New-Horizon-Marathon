@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Horizon Unity Run - Registration</title>
+
+    <!-- style sheet -->
+    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="registration.css">
+    
+    <!-- Fonts: Oswald for "Sporty" headers, Inter for readability -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="video-background">
+        <video autoplay muted loop playsinline poster="assets/marathon_fallback.jpg">
+            <source src="assets/marathon_video.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="page-container">
+        <div class="max-w-3xl">
+        <!-- Header -->
+        <header class="no-print">
+            <h1><span>New Horizon</span> Marathon <span>2026</span></h1>
+                </header>
+        
+        
+                <div class="progress-container no-print">
+                    <div class="progress-track">
+                        <div id="progress-bar" style="width: 0%"></div>
+                    </div>
+                    
+                    <div class="steps-wrapper">
+                        <div class="step-item active" id="step-item-1">
+                            <div class="step-dot active">1</div>
+                            <span class="step-label">Runner</span>
+                        </div>
+                        <div class="step-item" id="step-item-2">
+                            <div class="step-dot">2</div>
+                            <span class="step-label">Distance</span>
+                        </div>
+                        <div class="step-item" id="step-item-3">
+                            <div class="step-dot">3</div>
+                            <span class="step-label">Finish</span>
+                        </div>
+                    </div>
+                </div>
+        
+                <form id="registrationForm" novalidate>
+            
+            <!-- SECTION 1: Personal Information -->
+            <section id="step1" class="form-card step-transition">
+                <div class="section-header">
+                    <h2>01. Runner Profile</h2>
+                    <p>Who will be crossing the finish line?</p>
+                </div>
+
+                <div class="grid grid-cols-2">
+                    <div class="field-group">
+                        <label>First Name <span class="required">*</span></label>
+                        <input type="text" name="firstName" required placeholder="Jane">
+                        <p class="error-text">First name is required.</p>
+                    </div>
+                    <div class="field-group">
+                        <label>Last Name <span class="required">*</span></label>
+                        <input type="text" name="lastName" required placeholder="Doe">
+                        <p class="error-text">Last name is required.</p>
+                    </div>
+                    <div class="field-group sm-span-2">
+                        <label>Email Address <span class="required">*</span></label>
+                        <input type="email" name="email" id="emailInput" required placeholder="jane@example.com">
+                        <p class="error-text">Please enter a valid email address.</p>
+                    </div>
+                    <div class="field-group">
+                        <label>Phone Number (10 Digits) <span class="required">*</span></label>
+                        <input type="tel" name="phone" maxlength="10" placeholder="1234567890" required class="numeric-only">
+                        <p class="error-text">Exactly 10 digits required.</p>
+                    </div>
+                    <div class="field-group">
+                        <label>Age <span class="required">*</span></label>
+                        <input type="number" name="age" required min="6" max="120" step="1">
+                        <p class="error-text">Please enter a valid age (6-120).</p>
+                    </div>
+                    
+                    <div class="field-group sm-span-2" id="gender-group">
+                        <label>Gender <span class="required">*</span></label>
+                        <div class="radio-grid">
+                            <div>
+                                <input type="radio" name="gender" id="male" value="male" class="sr-only custom-option" required>
+                                <label for="male" class="custom-radio-label">Male</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="gender" id="female" value="female" class="sr-only custom-option">
+                                <label for="female" class="custom-radio-label">Female</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="gender" id="other" value="other" class="sr-only custom-option">
+                                <label for="other" class="custom-radio-label">Other</label>
+                            </div>
+                        </div>
+                        <p class="error-text">Please select a gender.</p>
+                    </div>
+                </div>
+
+                <div class="btn-container">
+                    <button type="button" onclick="nextStep(1)" class="btn-primary"><span>NEXT: DISTANCE</span></button>
+                </div>
+            </section>
+
+            <!-- SECTION 2: Race & Experience -->
+            <section id="step2" class="form-card step-transition hidden-step">
+                <div class="section-header">
+                    <h2>02. Race Details</h2>
+                    <p>Select your challenge and experience level.</p>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 2rem;">
+                    
+                    <!-- Race Category (Bib Style) -->
+                    <div class="field-group" id="category-group">
+                        <label style="margin-bottom: 0.5rem;">Select Your Distance <span class="required">*</span></label>
+                        <div class="category-grid">
+                            <label class="card-radio">
+                                <input type="radio" name="category" value="3k" required>
+                                <span class="card-title">3K</span>
+                                <span class="card-sub">Fun Run</span>
+                            </label>
+                            <label class="card-radio">
+                                <input type="radio" name="category" value="5k">
+                                <span class="card-title">5K</span>
+                                <span class="card-sub">Intermediate</span>
+                            </label>
+                            <label class="card-radio">
+                                <input type="radio" name="category" value="10k">
+                                <span class="card-title">10K</span>
+                                <span class="card-sub">Challenge</span>
+                            </label>
+                        </div>
+                        <p class="error-text">Please select a race category.</p>
+                    </div>
+
+                    <!-- Skills Rating -->
+                    <div class="field-group">
+                        <label>Self-Assessment <span class="required">*</span></label>
+                        <div class="range-container">
+                            <div class="range-labels">
+                                <span>NOVICE</span>
+                                <span>PRO</span>
+                            </div>
+                            <input type="range" name="runningSkill" min="1" max="5" step="1" value="3">
+                            <div class="range-labels" style="margin-top: 0.5rem; color: var(--text-muted); font-weight: 400;">
+                                <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Previous Experience -->
+                    <div class="field-group" id="experience-group">
+                        <label style="margin-bottom: 0.5rem;">Marathon History <span class="required">*</span></label>
+                        <div class="grid grid-cols-2" style="gap: 0.75rem;">
+                            <div>
+                                <input type="radio" name="prevExperience" id="exp-first-timer" value="first-timer" required class="sr-only custom-option">
+                                <label for="exp-first-timer" class="custom-radio-label" style="justify-content: flex-start; gap: 0.75rem;">
+                                    <div style="width: 1rem; height: 1rem; border-radius: 50%; border: 1px solid #cbd5e1; display: grid; place-items: center;" class="dot-indicator"></div>
+                                    <span>First-timer</span>
+                                </label>
+                            </div>
+                            <div>
+                                <input type="radio" name="prevExperience" id="exp-1-3" value="1-3" class="sr-only custom-option">
+                                <label for="exp-1-3" class="custom-radio-label" style="justify-content: flex-start; gap: 0.75rem;">
+                                    <div style="width: 1rem; height: 1rem; border-radius: 50%; border: 1px solid #cbd5e1; display: grid; place-items: center;" class="dot-indicator"></div>
+                                    <span>1-3 Marathons</span>
+                                </label>
+                            </div>
+                            <div>
+                                <input type="radio" name="prevExperience" id="exp-4-6" value="4-6" class="sr-only custom-option">
+                                <label for="exp-4-6" class="custom-radio-label" style="justify-content: flex-start; gap: 0.75rem;">
+                                    <div style="width: 1rem; height: 1rem; border-radius: 50%; border: 1px solid #cbd5e1; display: grid; place-items: center;" class="dot-indicator"></div>
+                                    <span>4-6 Marathons</span>
+                                </label>
+                            </div>
+                            <div>
+                                <input type="radio" name="prevExperience" id="exp-7-plus" value="7+" class="sr-only custom-option">
+                                <label for="exp-7-plus" class="custom-radio-label" style="justify-content: flex-start; gap: 0.75rem;">
+                                    <div style="width: 1rem; height: 1rem; border-radius: 50%; border: 1px solid #cbd5e1; display: grid; place-items: center;" class="dot-indicator"></div>
+                                    <span>7+ Marathons</span>
+                                </label>
+                            </div>
+                        </div>
+                        <p class="error-text">Please select your previous experience level.</p>
+                    </div>
+
+                    <!-- Medical Discomfort -->
+                    <div class="field-group" id="medical-group">
+                        <label>Any medical discomfort? <span class="required">*</span></label>
+                        <div style="display: flex; gap: 1.5rem; margin-top: 0.5rem;">
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                <input type="radio" name="medical" value="yes" required onchange="toggleMedicalRequirement(true)">
+                                <span>Yes</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                <input type="radio" name="medical" value="no" onchange="toggleMedicalRequirement(false)">
+                                <span>No</span>
+                            </label>
+                        </div>
+                        <p class="error-text">Please select an option.</p>
+                        
+                        <div id="medical-detail-container" style="margin-top: 1rem;">
+                            <textarea name="medicalDetail" id="medicalDetail" placeholder="Please specify any conditions or injuries..." style="height: 6rem;"></textarea>
+                            <p class="error-text">Please provide details about your medical discomfort.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btn-container btn-between">
+                    <button type="button" onclick="prevStep(2)" class="btn-ghost">BACK</button>
+                    <button type="button" onclick="nextStep(2)" class="btn-primary"><span>NEXT: EMERGENCY</span></button>
+                </div>
+            </section>
+
+            <!-- SECTION 3: Emergency & Final -->
+            <section id="step3" class="form-card step-transition hidden-step">
+                <div class="section-header">
+                    <h2>03. Emergency Contact</h2>
+                    <p>Safety first. Who do we call?</p>
+                </div>
+
+                <div class="grid grid-cols-2">
+                    <div class="field-group sm-span-2">
+                        <label>Contact Full Name <span class="required">*</span></label>
+                        <input type="text" name="emergencyName" required>
+                        <p class="error-text">Full name is required.</p>
+                    </div>
+                    <div class="field-group">
+                        <label>Phone Number <span class="required">*</span></label>
+                        <input type="tel" name="emergencyPhone" maxlength="10" placeholder="1234567890" required class="numeric-only">
+                        <p class="error-text">Exactly 10 digits required.</p>
+                    </div>
+                    <div class="field-group">
+                        <label>Relationship <span class="required">*</span></label>
+                        <input type="text" name="relationship" required placeholder="e.g. Spouse, Parent">
+                        <p class="error-text">Relationship is required.</p>
+                    </div>
+
+
+
+
+                    <div class="sm-span-2" id="terms-group">
+                        <div class="terms-wrapper" style="display: flex; gap: 1rem; align-items: flex-start; margin-top: 1rem; background: var(--bg-body); padding: 1rem; border-radius: 0.5rem;">
+                            <input type="checkbox" id="termsCheckbox" required style="width: 1.25rem; height: 1.25rem; margin-top: 0.2rem;">
+                            <label for="termsCheckbox" style="font-size: 0.8rem; font-weight: 400; color: var(--text-muted); text-transform: none;">
+                                I acknowledge that running a marathon is a strenuous activity. I hereby certify that the information provided is accurate and I agree to the <a href="#" style="color: var(--primary);">Terms and Conditions</a>.
+                            </label>
+                        </div>
+                        <p class="error-text">You must agree to the terms to proceed.</p>
+                    </div>
+                </div>
+
+                <div class="btn-container btn-between">
+                    <button type="button" onclick="prevStep(3)" class="btn-ghost">BACK</button>
+                    <div style="display: flex; gap: 0.75rem;">
+                        <button type="submit" id="submitBtn" disabled class="btn-primary" style="opacity: 0.5; cursor: not-allowed;"><span>COMPLETE REGISTRATION</span></button>
+                    </div>
+                </div>
+            </section>
+        </form>
+        </div>
+    </div>
+    <!-- Script file -->
+     <script src="registration.js"></script>
+</body>
+</html>

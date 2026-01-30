@@ -1,0 +1,89 @@
+/* MARATHON THEME VARIABLES */
+:root {
+    --primary: #ff5e62; /* Vibrant Runner's Orange */
+    --primary-dark: #ff9966;
+    --secondary: #1e293b; /* Slate 800 */
+    --accent: #fbbf24; /* Gold for medals/highlights */
+    --bg-body: #f1f5f9;
+    --bg-card: #ffffff;
+    --text-main: #1f2937;
+    --text-muted: #6b7280;
+    --border-color: #e5e7eb;
+    --success: #10b981;
+    --error: #ef4444;
+    --track-grey: #cbd5e1;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-body);
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(255, 107, 0, 0.05) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(30, 41, 59, 0.05) 0%, transparent 20%);
+    color: var(--text-main);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* Common Card Styling */
+.form-card {
+    background: #ffffffcc;
+    border-radius: 1rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.01);
+    border-top: 5px solid var(--primary);
+    position: relative;
+}
+
+/* Finish line check pattern decoration */
+.form-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 2rem;
+    width: 3rem;
+    height: 0.75rem;
+    background-image: 
+        linear-gradient(45deg, #000 25%, transparent 25%), 
+        linear-gradient(-45deg, #000 25%, transparent 25%), 
+        linear-gradient(45deg, transparent 75%, #000 75%), 
+        linear-gradient(-45deg, transparent 75%, #000 75%);
+    background-size: 10px 10px;
+    background-color: white;
+    opacity: 0.1;
+}
+
+/* Common button styling */
+.btn-primary {
+    display: inline-block;
+    background-color: var(--primary);
+    color: white;
+    padding: 0.8rem 2rem;
+    border-radius: 0.3rem;
+    font-weight: 500;
+    text-decoration: none;
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transform: skew(-5deg); /* Sporty skew */
+    transition: all 0.2s;
+    box-shadow: 0 4px 6px -1px rgba(255, 107, 0, 0.3);
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary span {
+    display: inline-block;
+    transform: skew(5deg);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    transform: skew(-5deg) translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(255, 107, 0, 0.4);
+}
