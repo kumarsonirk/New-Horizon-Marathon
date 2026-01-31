@@ -357,8 +357,8 @@ nav {
 }
 
 .about-section h3 {
-    font-size: 1.8rem;
-    margin-bottom: 25px;
+    font-size: 1.4rem;
+    margin-bottom: 20px;
     color: var(--white);
     letter-spacing: 1px;
 }
@@ -787,6 +787,10 @@ nav {
 
 
 @media (max-width: 600px) {
+
+    .about-container {
+    text-align: left;
+}
     .hero-timer {
         gap: 20px;
         justify-content: flex-start;
