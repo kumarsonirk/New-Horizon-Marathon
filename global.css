@@ -41,7 +41,7 @@ body {
 }
 
 /* Finish line check pattern decoration */
-.form-card::before {
+/* .form-card::before {
     content: "";
     position: absolute;
     top: 0;
@@ -56,7 +56,7 @@ body {
     background-size: 10px 10px;
     background-color: white;
     opacity: 0.1;
-}
+} */
 
 /* Common button styling */
 .btn-primary {

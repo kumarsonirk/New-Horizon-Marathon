@@ -5,23 +5,37 @@ const successMessage = document.getElementById('successMessage');
 const termsCheckbox = document.getElementById('termsCheckbox');
 const submitBtn = document.getElementById('submitBtn');
 
-const ageInput = form.querySelector('input[name="age"]');
+// 1. Changed ageInput to birthDateInput
+const birthDateInput = form.querySelector('input[name="birthDate"]');
 const categoryOptions = {
     '3k': document.querySelector('input[name="category"][value="3k"]').closest('.card-radio'),
     '5k': document.querySelector('input[name="category"][value="5k"]').closest('.card-radio'),
     '10k': document.querySelector('input[name="category"][value="10k"]').closest('.card-radio')
 };
 
+// 2. Added calculateAge function
+function calculateAge(birthDateString) {
+    if (!birthDateString) return 0;
+    const birthDate = new Date(birthDateString);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
+}
+
+// 3. Modified updateDistanceOptions
 function updateDistanceOptions() {
-    if (!ageInput) return;
-    const age = parseInt(ageInput.value, 10);
+    if (!birthDateInput) return;
+    const age = calculateAge(birthDateInput.value); // Use new function
     const selectedCategory = form.querySelector('input[name="category"]:checked');
 
     // Hide all options by default
     Object.values(categoryOptions).forEach(option => option.style.display = 'none');
 
-    if (isNaN(age)) {
-        // If no age or invalid age, deselect and return
+    if (age === 0) { // If no date is entered, age will be 0
         if (selectedCategory) selectedCategory.checked = false;
         return;
     }
@@ -43,8 +57,9 @@ function updateDistanceOptions() {
     }
 }
 
-if (ageInput) {
-    ageInput.addEventListener('input', updateDistanceOptions);
+// 4. Modified event listener
+if (birthDateInput) {
+    birthDateInput.addEventListener('input', updateDistanceOptions);
     // Initial call to set the state when the page loads
     updateDistanceOptions();
 }
@@ -94,7 +109,7 @@ function validateStep(step) {
 
         if (input.type === 'radio') {
             const groupName = input.name;
-            if (currentSection.querySelector(`input[name="${groupName}"]`)) { // Check if radio group is in current step
+            if (currentSection.querySelector(`input[name="${groupName}"]`)) { 
                 const checked = currentSection.querySelector(`input[name="${groupName}"]:checked`);
                 if (!checked) {
                     inputValid = false;
@@ -109,14 +124,26 @@ function validateStep(step) {
             if (!validateEmail(input.value)) inputValid = false;
         } else if (input.name.toLowerCase().includes('phone')) {
             if (input.value.length !== 10) inputValid = false;
-        } else if (input.name === 'age') {
-            const ageString = input.value.trim();
-            const age = parseFloat(ageString); // Use parseFloat to check for decimals
-            const minAge = parseInt(input.min, 10) || 6;
-            const maxAge = parseInt(input.max, 10) || 120;
+        
+        // 5. Replaced 'age' validation with 'birthDate' validation
+        } else if (input.name === 'birthDate') {
+            if (!input.value.trim()) {
+                inputValid = false;
+            } else {
+                const age = calculateAge(input.value);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const dob = new Date(input.value);
 
-            if (!ageString || isNaN(age) || age < minAge || age > maxAge || !Number.isInteger(age)) {
-                 inputValid = false;
+                if (dob > today) {
+                    input.nextElementSibling.textContent = 'Date of birth cannot be in the future.';
+                    inputValid = false;
+                } else if (age < 6) {
+                    input.nextElementSibling.textContent = 'You must be at least 6 years old to register.';
+                    inputValid = false;
+                } else {
+                    input.nextElementSibling.textContent = 'Please enter a valid date of birth.';
+                }
             }
         } else if (input.type === 'checkbox') {
             if (!input.checked) {

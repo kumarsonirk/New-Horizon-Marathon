@@ -81,10 +81,11 @@
                         <p class="error-text">Exactly 10 digits required.</p>
                     </div>
                     <div class="field-group">
-                        <label>Age <span class="required">*</span></label>
-                        <input type="number" name="age" required min="6" max="120" step="1">
-                        <p class="error-text">Please enter a valid age (6-120).</p>
+                        <label>Date of Birth <span class="required">*</span></label>
+                        <input type="date" name="birthDate" required>
+                        <p class="error-text">Please enter a valid date of birth.</p>
                     </div>
+
                     
                     <div class="field-group sm-span-2" id="gender-group">
                         <label>Gender <span class="required">*</span></label>
@@ -246,8 +247,10 @@
                         <p class="error-text">Relationship is required.</p>
                     </div>
 
-
-
+                    <div class="field-group sm-span-2">
+                        <label>Coupon Code</label>
+                        <input type="text" name="couponCode" placeholder="Enter your code">
+                    </div>
 
                     <div class="sm-span-2" id="terms-group">
                         <div class="terms-wrapper" style="display: flex; gap: 1rem; align-items: flex-start; margin-top: 1rem; background: var(--bg-body); padding: 1rem; border-radius: 0.5rem;">
