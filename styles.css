@@ -357,7 +357,7 @@ nav {
 }
 
 .about-section h3 {
-    font-size: 1.4rem;
+    font-size: 1.8rem;
     margin-bottom: 20px;
     color: var(--white);
     letter-spacing: 1px;
@@ -787,6 +787,9 @@ nav {
 
 
 @media (max-width: 600px) {
+    .about-section h3 {
+    font-size: 1.4rem;
+}
 
     .about-container {
     text-align: left;
