@@ -56,8 +56,12 @@ nav {
     display: contents !important;
 }
 
-.logo img {
-    width: 17%;
+.logo .marathon {
+    width: 18%;
+}
+
+.logo .nhce_logo {
+    width: 15%;
 }
 
 .nav-btn {
@@ -903,7 +907,11 @@ nav {
 }
 
 @media (max-width: 768px) {
-    .logo img {
-        width: 40%;
-    }
+    .logo .marathon {
+    width: 40%;
+}
+
+.logo .nhce_logo {
+    width: 37%;
+}
 }
