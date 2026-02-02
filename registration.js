@@ -5,16 +5,37 @@ const successMessage = document.getElementById('successMessage');
 const termsCheckbox = document.getElementById('termsCheckbox');
 const submitBtn = document.getElementById('submitBtn');
 
-// 1. Changed ageInput to birthDateInput
 const birthDateInput = form.querySelector('input[name="birthDate"]');
+const ageCategoryRangeInput = document.getElementById('ageCategoryRangeInput'); // New: hidden input
 const categoryOptions = {
     '3k': document.querySelector('input[name="category"][value="3k"]').closest('.card-radio'),
     '5k': document.querySelector('input[name="category"][value="5k"]').closest('.card-radio'),
     '10k': document.querySelector('input[name="category"][value="10k"]').closest('.card-radio')
 };
 
-// 2. Added calculateAge function
-function calculateAge(birthDateString) {
+const AGE_CATEGORIES = [
+    { min: 6, max: 11, displayLabel: "6 to 11 years of age", valueLabel: "6-11" },
+    { min: 12, max: 14, displayLabel: "12 to 14 years of age", valueLabel: "12-14" },
+    { min: 15, max: 17, displayLabel: "15 to 17 years of age", valueLabel: "15-17" },
+    { min: 18, max: 30, displayLabel: "18 to 30 years of age", valueLabel: "18-30" },
+    { min: 31, max: 40, displayLabel: "31 to 40 years of age", valueLabel: "31-40" },
+    { min: 41, max: 50, displayLabel: "41 to 50 years of age", valueLabel: "41-50" },
+    { min: 51, max: 60, displayLabel: "51 to 60 years of age", valueLabel: "51-60" },
+    { min: 61, max: Infinity, displayLabel: "61 years of age & above", valueLabel: "61+" },
+];
+
+function getCategoryRange(age, forDisplay = true) {
+    if (age < 6) return forDisplay ? "Not eligible to participate" : "";
+    for (const category of AGE_CATEGORIES) {
+        if (age >= category.min && age <= category.max) {
+            return forDisplay ? category.displayLabel : category.valueLabel;
+        }
+    }
+    return forDisplay ? "Not categorized" : "";
+}
+
+// New age calculation functions
+function calculateChronologicalAge(birthDateString) {
     if (!birthDateString) return 0;
     const birthDate = new Date(birthDateString);
     const today = new Date();
@@ -23,45 +44,103 @@ function calculateAge(birthDateString) {
     if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
         age--;
     }
-    return age;
+    return age < 0 ? 0 : age;
 }
 
-// 3. Modified updateDistanceOptions
+function getDaysSinceLastBirthday(birthDateString) {
+    if (!birthDateString) return null;
+    const birthDate = new Date(birthDateString);
+    const today = new Date();
+
+    const lastBirthday = new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate());
+    if (lastBirthday > today) {
+        lastBirthday.setFullYear(today.getFullYear() - 1);
+    }
+    
+    const oneDay = 1000 * 60 * 60 * 24;
+    return Math.floor((today.getTime() - lastBirthday.getTime()) / oneDay);
+}
+
+
+function getCategoryAge(birthDateString) {
+    if (!birthDateString) return 0;
+    const chronologicalAge = calculateChronologicalAge(birthDateString);
+    const birthDate = new Date(birthDateString);
+    const today = new Date();
+
+    const lastBirthday = new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate());
+    if (lastBirthday > today) {
+        lastBirthday.setFullYear(today.getFullYear() - 1);
+    }
+    
+    const oneDay = 1000 * 60 * 60 * 24;
+    // Use floor to get whole days
+    const daysSinceBirthday = Math.floor((today.getTime() - lastBirthday.getTime()) / oneDay);
+
+    if (daysSinceBirthday > 10) {
+        return chronologicalAge + 1;
+    } else {
+        return chronologicalAge;
+    }
+}
+
+
 function updateDistanceOptions() {
     if (!birthDateInput) return;
-    const age = calculateAge(birthDateInput.value); // Use new function
+    const dobValue = birthDateInput.value;
+    const chronologicalAge = calculateChronologicalAge(dobValue);
+    const categoryAge = getCategoryAge(dobValue);
+    const daysSinceBirthday = getDaysSinceLastBirthday(dobValue);
+    const categoryDisplayLabel = getCategoryRange(categoryAge, true);  // For visible text
+    const categoryValueLabel = getCategoryRange(categoryAge, false); // For hidden input
+
+    const ageDisplay = document.getElementById('ageDisplay');
+    const ageInfoContainer = document.getElementById('ageInfoContainer');
+
+    if (ageDisplay && ageInfoContainer) {
+        if (dobValue) {
+            ageDisplay.innerHTML = `Your age is <strong>${chronologicalAge} years and ${daysSinceBirthday} days</strong>.<br>Your category is: <strong>${categoryDisplayLabel}</strong>.`;
+            ageInfoContainer.style.display = 'block'; // Show the container
+            if (ageCategoryRangeInput) {
+                ageCategoryRangeInput.value = categoryValueLabel; // Set hidden input
+            }
+        } else {
+            ageDisplay.innerHTML = ''; // Clear display
+            ageInfoContainer.style.display = 'none'; // Hide the container
+            if (ageCategoryRangeInput) {
+                ageCategoryRangeInput.value = ''; // Clear hidden input
+            }
+        }
+    }
+
     const selectedCategory = form.querySelector('input[name="category"]:checked');
 
-    // Hide all options by default
     Object.values(categoryOptions).forEach(option => option.style.display = 'none');
 
-    if (age === 0) { // If no date is entered, age will be 0
+    if (categoryAge === 0) { 
         if (selectedCategory) selectedCategory.checked = false;
         return;
     }
 
-    // Show options based on age
-    if (age >= 6) {
+    // Show options based on CATEGORY age
+    if (categoryAge >= 6) {
         categoryOptions['3k'].style.display = 'block';
     }
-    if (age >= 12) {
+    if (categoryAge >= 12) {
         categoryOptions['5k'].style.display = 'block';
     }
-    if (age >= 14) {
+    if (categoryAge >= 14) {
         categoryOptions['10k'].style.display = 'block';
     }
 
-    // If the currently selected category is now hidden, uncheck it
     if (selectedCategory && selectedCategory.closest('.card-radio').style.display === 'none') {
         selectedCategory.checked = false;
     }
 }
 
-// 4. Modified event listener
 if (birthDateInput) {
     birthDateInput.addEventListener('input', updateDistanceOptions);
-    // Initial call to set the state when the page loads
-    updateDistanceOptions();
+    updateDistanceOptions(); // Initial call
 }
 
 
@@ -125,12 +204,11 @@ function validateStep(step) {
         } else if (input.name.toLowerCase().includes('phone')) {
             if (input.value.length !== 10) inputValid = false;
         
-        // 5. Replaced 'age' validation with 'birthDate' validation
         } else if (input.name === 'birthDate') {
             if (!input.value.trim()) {
                 inputValid = false;
             } else {
-                const age = calculateAge(input.value);
+                const chronologicalAge = calculateChronologicalAge(input.value); // Use chronological age for validation
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);
                 const dob = new Date(input.value);
@@ -138,11 +216,38 @@ function validateStep(step) {
                 if (dob > today) {
                     input.nextElementSibling.textContent = 'Date of birth cannot be in the future.';
                     inputValid = false;
-                } else if (age < 6) {
+                } else if (chronologicalAge < 6) { // Minimum age check
                     input.nextElementSibling.textContent = 'You must be at least 6 years old to register.';
                     inputValid = false;
                 } else {
                     input.nextElementSibling.textContent = 'Please enter a valid date of birth.';
+                }
+            }
+        } else if (input.type === 'file' && input.name === 'idCard') {
+            // Find the error text element associated with this input
+            const parentFieldGroup = input.closest('.field-group');
+            const errorTextElement = parentFieldGroup ? parentFieldGroup.querySelector('.error-text') : null;
+
+            if (input.files.length === 0) {
+                inputValid = false;
+                if (errorTextElement) errorTextElement.textContent = 'Please upload your ID card.';
+            } else {
+                const file = input.files[0];
+                const maxSize = 2 * 1024 * 1024; // 2MB
+
+                // Validate file type
+                const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+                if (!allowedTypes.includes(file.type)) {
+                    inputValid = false;
+                    if (errorTextElement) errorTextElement.textContent = 'Only JPG, PNG, or PDF files are allowed.';
+                } 
+                // Validate file size
+                else if (file.size > maxSize) {
+                    inputValid = false;
+                    if (errorTextElement) errorTextElement.textContent = 'File size must be 2MB or less.';
+                } else {
+                    // Reset to default message if valid
+                    if (errorTextElement) errorTextElement.textContent = 'Please upload your ID card.'; 
                 }
             }
         } else if (input.type === 'checkbox') {
@@ -156,11 +261,14 @@ function validateStep(step) {
 
         if (!inputValid) {
             isValid = false;
-            if (input.type !== 'radio' && input.type !== 'checkbox') {
-                input.classList.add('input-error');
-                if (input.id === 'medicalDetail') {
-                    document.getElementById('medical-detail-container').classList.add('has-error');
-                }
+            const fieldGroup = input.closest('.field-group');
+            if (fieldGroup) {
+                fieldGroup.classList.add('has-error');
+            }
+            
+            // Add input-error for inputs that need it (text, email, etc.)
+            if (input.type !== 'radio' && input.type !== 'checkbox' && input.type !== 'file') {
+                 input.classList.add('input-error');
             }
         }
     });
@@ -229,14 +337,27 @@ function updateProgress() {
 }
 
 form.addEventListener('input', (e) => {
-    if (e.target.required) {
-        if (e.target.value.trim()) {
-            e.target.classList.remove('input-error');
+    // Find the parent field-group and remove its error state
+    const fieldGroup = e.target.closest('.field-group');
+    if (fieldGroup && fieldGroup.classList.contains('has-error')) {
+        fieldGroup.classList.remove('has-error');
+
+        // Also attempt to remove .input-error from the visual element
+        const inputElement = fieldGroup.querySelector('.input-error');
+        if (inputElement) {
+            inputElement.classList.remove('input-error');
         }
     }
-
-    if (e.target.type === 'radio') {
-        const groupContainer = e.target.closest('.has-error');
-        if (groupContainer) groupContainer.classList.remove('has-error');
-    }
 });
+
+const idCardInput = document.getElementById('idCard');
+if (idCardInput) {
+    const filenameSpan = document.querySelector('.file-upload-filename');
+    idCardInput.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files.length > 0) {
+            filenameSpan.textContent = e.target.files[0].name;
+        } else {
+            filenameSpan.textContent = 'No file selected';
+        }
+    });
+}
