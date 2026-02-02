@@ -53,7 +53,7 @@ nav {
 
 .logo {
     max-width: 100%;
-    display: contents;
+    display: contents !important;
 }
 
 .logo img {
