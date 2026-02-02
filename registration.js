@@ -223,33 +223,6 @@ function validateStep(step) {
                     input.nextElementSibling.textContent = 'Please enter a valid date of birth.';
                 }
             }
-        } else if (input.type === 'file' && input.name === 'idCard') {
-            // Find the error text element associated with this input
-            const parentFieldGroup = input.closest('.field-group');
-            const errorTextElement = parentFieldGroup ? parentFieldGroup.querySelector('.error-text') : null;
-
-            if (input.files.length === 0) {
-                inputValid = false;
-                if (errorTextElement) errorTextElement.textContent = 'Please upload your ID card.';
-            } else {
-                const file = input.files[0];
-                const maxSize = 2 * 1024 * 1024; // 2MB
-
-                // Validate file type
-                const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
-                if (!allowedTypes.includes(file.type)) {
-                    inputValid = false;
-                    if (errorTextElement) errorTextElement.textContent = 'Only JPG, PNG, or PDF files are allowed.';
-                } 
-                // Validate file size
-                else if (file.size > maxSize) {
-                    inputValid = false;
-                    if (errorTextElement) errorTextElement.textContent = 'File size must be 2MB or less.';
-                } else {
-                    // Reset to default message if valid
-                    if (errorTextElement) errorTextElement.textContent = 'Please upload your ID card.'; 
-                }
-            }
         } else if (input.type === 'checkbox') {
             if (!input.checked) {
                 inputValid = false;
@@ -272,6 +245,17 @@ function validateStep(step) {
             }
         }
     });
+
+    // Validate Coupon Code (Optional but must be 10 digits if entered)
+    const couponInput = currentSection.querySelector('input[name="couponCode"]');
+    if (couponInput && couponInput.value.trim() !== '') {
+        if (couponInput.value.length !== 10) {
+            isValid = false;
+            const fieldGroup = couponInput.closest('.field-group');
+            if (fieldGroup) fieldGroup.classList.add('has-error');
+            couponInput.classList.add('input-error');
+        }
+    }
 
     return isValid;
 }
@@ -349,15 +333,3 @@ form.addEventListener('input', (e) => {
         }
     }
 });
-
-const idCardInput = document.getElementById('idCard');
-if (idCardInput) {
-    const filenameSpan = document.querySelector('.file-upload-filename');
-    idCardInput.addEventListener('change', (e) => {
-        if (e.target.files && e.target.files.length > 0) {
-            filenameSpan.textContent = e.target.files[0].name;
-        } else {
-            filenameSpan.textContent = 'No file selected';
-        }
-    });
-}
