@@ -788,6 +788,17 @@ nav {
 
 
 @media (max-width: 600px) {
+
+    .hero h1 {
+    margin: 20px 0px;
+}
+
+    .hero p {
+        font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+
     .about-section h3 {
     font-size: 1.4rem;
 }
@@ -797,7 +808,7 @@ nav {
 }
     .hero-timer {
         gap: 20px;
-        justify-content: flex-start;
+        justify-content: center;
         display: flex;
         flex-wrap: wrap;
         margin: 15px auto;
@@ -887,12 +898,12 @@ nav {
     }
 
     .hero-cta {
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
 }
 
 @media (max-width: 768px) {
     .logo img {
-        width: 50%;
+        width: 40%;
     }
 }
