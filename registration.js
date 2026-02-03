@@ -7,36 +7,12 @@ const submitBtn = document.getElementById('submitBtn');
 
 const birthDateInput = form.querySelector('input[name="birthDate"]');
 const ageCategoryRangeInput = document.getElementById('ageCategoryRangeInput'); // New: hidden input
-const ageCategoryRangeInput = document.getElementById('ageCategoryRangeInput'); // New: hidden input
 const categoryOptions = {
     '3k': document.querySelector('input[name="category"][value="3k"]').closest('.card-radio'),
     '5k': document.querySelector('input[name="category"][value="5k"]').closest('.card-radio'),
     '10k': document.querySelector('input[name="category"][value="10k"]').closest('.card-radio')
 };
 
-const AGE_CATEGORIES = [
-    { min: 6, max: 11, displayLabel: "6 to 11 years of age", valueLabel: "6-11" },
-    { min: 12, max: 14, displayLabel: "12 to 14 years of age", valueLabel: "12-14" },
-    { min: 15, max: 17, displayLabel: "15 to 17 years of age", valueLabel: "15-17" },
-    { min: 18, max: 30, displayLabel: "18 to 30 years of age", valueLabel: "18-30" },
-    { min: 31, max: 40, displayLabel: "31 to 40 years of age", valueLabel: "31-40" },
-    { min: 41, max: 50, displayLabel: "41 to 50 years of age", valueLabel: "41-50" },
-    { min: 51, max: 60, displayLabel: "51 to 60 years of age", valueLabel: "51-60" },
-    { min: 61, max: Infinity, displayLabel: "61 years of age & above", valueLabel: "61+" },
-];
-
-function getCategoryRange(age, forDisplay = true) {
-    if (age < 6) return forDisplay ? "Not eligible to participate" : "";
-    for (const category of AGE_CATEGORIES) {
-        if (age >= category.min && age <= category.max) {
-            return forDisplay ? category.displayLabel : category.valueLabel;
-        }
-    }
-    return forDisplay ? "Not categorized" : "";
-}
-
-// New age calculation functions
-function calculateChronologicalAge(birthDateString) {
 const AGE_CATEGORIES = [
     { min: 6, max: 11, displayLabel: "6 to 11 years of age", valueLabel: "6-11" },
     { min: 12, max: 14, displayLabel: "12 to 14 years of age", valueLabel: "12-14" },
@@ -148,15 +124,11 @@ function updateDistanceOptions() {
 
     // Show options based on CATEGORY age
     if (categoryAge >= 6) {
-    // Show options based on CATEGORY age
-    if (categoryAge >= 6) {
         categoryOptions['3k'].style.display = 'block';
     }
     if (categoryAge >= 12) {
-    if (categoryAge >= 12) {
         categoryOptions['5k'].style.display = 'block';
     }
-    if (categoryAge >= 14) {
     if (categoryAge >= 14) {
         categoryOptions['10k'].style.display = 'block';
     }
@@ -169,18 +141,21 @@ function updateDistanceOptions() {
 if (birthDateInput) {
     birthDateInput.addEventListener('input', updateDistanceOptions);
     updateDistanceOptions(); // Initial call
-    updateDistanceOptions(); // Initial call
 }
 
 
 function toggleMedicalRequirement(isRequired) {
     const textarea = document.getElementById('medicalDetail');
+    const container = document.getElementById('medical-detail-container');
+
     if (isRequired) {
+        container.style.display = 'block';
         textarea.setAttribute('required', 'required');
     } else {
+        container.style.display = 'none';
         textarea.removeAttribute('required');
         textarea.classList.remove('input-error');
-        document.getElementById('medical-detail-container').classList.remove('has-error');
+        container.classList.remove('has-error');
     }
 }
 
@@ -197,6 +172,47 @@ termsCheckbox.addEventListener('change', function() {
     if (this.checked) {
         document.getElementById('terms-group').classList.remove('has-error');
     }
+});
+
+// Listener for category selection to show the 'run before' prompt
+document.querySelectorAll('input[name="category"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+        const pastRunContainer = document.getElementById('past-run-container');
+        const hasRunBeforeRadios = form.querySelectorAll('input[name="hasRunBefore"]');
+
+        const selectedCategory = form.querySelector('input[name="category"]:checked');
+        if (selectedCategory) {
+            pastRunContainer.style.display = 'flex';
+            hasRunBeforeRadios.forEach(r => r.setAttribute('required', 'required'));
+        } else {
+            pastRunContainer.style.display = 'none';
+            hasRunBeforeRadios.forEach(r => r.removeAttribute('required'));
+        }
+    });
+});
+
+// Listener for 'has run before' radio buttons to show details
+document.querySelectorAll('input[name="hasRunBefore"]').forEach(radio => {
+    radio.addEventListener('change', (e) => {
+        const pastRunDetailsContainer = document.getElementById('past-run-details-container');
+        const pastDistanceInput = form.querySelector('input[name="pastDistance"]');
+        const pastTimeInput = form.querySelector('input[name="pastTime"]');
+
+        if (e.target.value === 'yes') {
+            pastRunDetailsContainer.style.display = 'grid';
+            pastDistanceInput.setAttribute('required', 'required');
+            pastTimeInput.setAttribute('required', 'required');
+        } else {
+            pastRunDetailsContainer.style.display = 'none';
+            pastDistanceInput.removeAttribute('required');
+            pastTimeInput.removeAttribute('required');
+            // Also clear errors if any
+            pastDistanceInput.closest('.field-group').classList.remove('has-error');
+            pastDistanceInput.classList.remove('input-error');
+            pastTimeInput.closest('.field-group').classList.remove('has-error');
+            pastTimeInput.classList.remove('input-error');
+        }
+    });
 });
 
 function validateEmail(email) {
@@ -223,8 +239,8 @@ function validateStep(step) {
                     inputValid = false;
                     const groupContainer = input.closest('#gender-group') ||
                                             input.closest('#category-group') ||
-                                            input.closest('#experience-group') ||
-                                            input.closest('#medical-group');
+                                            input.closest('#medical-group') ||
+                                            input.closest('#past-run-group');
                     if (groupContainer) groupContainer.classList.add('has-error');
                 }
             }
@@ -238,7 +254,6 @@ function validateStep(step) {
                 inputValid = false;
             } else {
                 const chronologicalAge = calculateChronologicalAge(input.value); // Use chronological age for validation
-                const chronologicalAge = calculateChronologicalAge(input.value); // Use chronological age for validation
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);
                 const dob = new Date(input.value);
@@ -246,7 +261,6 @@ function validateStep(step) {
                 if (dob > today) {
                     input.nextElementSibling.textContent = 'Date of birth cannot be in the future.';
                     inputValid = false;
-                } else if (chronologicalAge < 6) { // Minimum age check
                 } else if (chronologicalAge < 6) { // Minimum age check
                     input.nextElementSibling.textContent = 'You must be at least 6 years old to register.';
                     inputValid = false;
@@ -281,6 +295,18 @@ function validateStep(step) {
                     if (errorTextElement) errorTextElement.textContent = 'Please upload your ID card.'; 
                 }
             }
+        } else if (input.name === 'pastDistance') {
+            if (input.value <= 0) {
+                inputValid = false;
+            }
+        } else if (input.name === 'pastTime') {
+            const timeRegex = /^\d{1,2}:[0-5]\d:[0-5]\d$/;
+            if (!timeRegex.test(input.value)) {
+                inputValid = false;
+                input.nextElementSibling.textContent = "Please use HH:MM:SS format.";
+            } else {
+                 input.nextElementSibling.textContent = "Please enter time in HH:MM:SS format.";
+            }
         } else if (input.type === 'checkbox') {
             if (!input.checked) {
                 inputValid = false;
@@ -300,17 +326,11 @@ function validateStep(step) {
             // Add input-error for inputs that need it (text, email, etc.)
             if (input.type !== 'radio' && input.type !== 'checkbox' && input.type !== 'file') {
                  input.classList.add('input-error');
-            const fieldGroup = input.closest('.field-group');
-            if (fieldGroup) {
-                fieldGroup.classList.add('has-error');
-            }
-            
-            // Add input-error for inputs that need it (text, email, etc.)
-            if (input.type !== 'radio' && input.type !== 'checkbox' && input.type !== 'file') {
-                 input.classList.add('input-error');
             }
         }
     });
+
+
 
     // Validate Coupon Code (Optional but must be 10 digits if entered)
     const couponInput = currentSection.querySelector('input[name="couponCode"]');

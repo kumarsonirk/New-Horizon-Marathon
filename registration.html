@@ -115,10 +115,6 @@
                                 <input type="radio" name="gender" id="female" value="female" class="sr-only custom-option">
                                 <label for="female" class="custom-radio-label">Female</label>
                             </div>
-                            <div>
-                                <input type="radio" name="gender" id="other" value="other" class="sr-only custom-option">
-                                <label for="other" class="custom-radio-label">Other</label>
-                            </div>
                         </div>
                         <p class="error-text">Please select a gender.</p>
                     </div>
@@ -164,60 +160,38 @@
                                 <span class="card-sub">Challenge</span>
                             </label>
                         </div>
-                        <p class="error-text">Please select a race category.</p>
-                    </div>
-
-                    <!-- Skills Rating -->
-                    <div class="field-group">
-                        <label>Self-Assessment <span class="required">*</span></label>
-                        <div class="range-container">
-                            <div class="range-labels">
-                                <span>NOVICE</span>
-                                <span>PRO</span>
-                            </div>
-                            <input type="range" name="runningSkill" min="1" max="5" step="1" value="3">
-                            <div class="range-labels" style="margin-top: 0.5rem; color: var(--text-muted); font-weight: 400;">
-                                <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Previous Experience -->
-                    <div class="field-group" id="experience-group">
-                        <label style="margin-bottom: 0.5rem;">Marathon History <span class="required">*</span></label>
-                        <div class="grid grid-cols-2" style="gap: 0.75rem;">
-                            <div>
-                                <input type="radio" name="prevExperience" id="exp-first-timer" value="first-timer" required class="sr-only custom-option">
-                                <label for="exp-first-timer" class="custom-radio-label" style="justify-content: flex-start; gap: 0.75rem;">
-                                    <div style="width: 1rem; height: 1rem; border-radius: 50%; border: 1px solid #cbd5e1; display: grid; place-items: center;" class="dot-indicator"></div>
-                                    <span>First-timer</span>
-                                </label>
-                            </div>
-                            <div>
-                                <input type="radio" name="prevExperience" id="exp-1-3" value="1-3" class="sr-only custom-option">
-                                <label for="exp-1-3" class="custom-radio-label" style="justify-content: flex-start; gap: 0.75rem;">
-                                    <div style="width: 1rem; height: 1rem; border-radius: 50%; border: 1px solid #cbd5e1; display: grid; place-items: center;" class="dot-indicator"></div>
-                                    <span>1-3 Marathons</span>
-                                </label>
-                            </div>
-                            <div>
-                                <input type="radio" name="prevExperience" id="exp-4-6" value="4-6" class="sr-only custom-option">
-                                <label for="exp-4-6" class="custom-radio-label" style="justify-content: flex-start; gap: 0.75rem;">
-                                    <div style="width: 1rem; height: 1rem; border-radius: 50%; border: 1px solid #cbd5e1; display: grid; place-items: center;" class="dot-indicator"></div>
-                                    <span>4-6 Marathons</span>
-                                </label>
-                            </div>
-                            <div>
-                                <input type="radio" name="prevExperience" id="exp-7-plus" value="7+" class="sr-only custom-option">
-                                <label for="exp-7-plus" class="custom-radio-label" style="justify-content: flex-start; gap: 0.75rem;">
-                                    <div style="width: 1rem; height: 1rem; border-radius: 50%; border: 1px solid #cbd5e1; display: grid; place-items: center;" class="dot-indicator"></div>
-                                    <span>7+ Marathons</span>
-                                </label>
-                            </div>
-                        </div>
-                        <p class="error-text">Please select your previous experience level.</p>
-                    </div>
-
+                                                <p class="error-text">Please select a race category.</p>
+                                            </div>
+                        
+                                                                <!-- Past Run Details -->
+                                                                <div id="past-run-container" style="display: none; margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1.5rem;">
+                                                                    <div class="field-group" id="past-run-group">
+                                                                        <label>Have you participated in a marathon before? <span class="required">*</span></label>
+                                                                        <div style="display: flex; gap: 1.5rem; margin-top: 0.5rem;">
+                                                                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                                                                <input type="radio" name="hasRunBefore" value="yes">
+                                                                                <span>Yes</span>
+                                                                            </label>
+                                                                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                                                                <input type="radio" name="hasRunBefore" value="no">
+                                                                                <span>No</span>
+                                                                            </label>
+                                                                        </div>
+                                                                        <p class="error-text">Please select an option.</p>
+                                                                    </div>
+                                                                    <div id="past-run-details-container" class="grid grid-cols-2" style="display: none;">
+                                                                        <div class="field-group">
+                                                                            <label>Farthest Distance Run (km) <span class="required">*</span></label>
+                                                                            <input type="number" name="pastDistance" placeholder="e.g. 10" min="0" max="99">
+                                                                            <p class="error-text">Please enter a valid distance (2 digits max).</p>
+                                                                        </div>
+                                                                        <div class="field-group">
+                                                                            <label>Time for that distance <span class="required">*</span></label>
+                                                                            <input type="text" name="pastTime" placeholder="HH:MM:SS">
+                                                                            <p class="error-text">Please enter time in HH:MM:SS format.</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>                        
                     <!-- Medical Discomfort -->
                     <div class="field-group" id="medical-group">
                         <label>Any medical discomfort? <span class="required">*</span></label>
@@ -232,11 +206,11 @@
                             </label>
                         </div>
                         <p class="error-text">Please select an option.</p>
-                        
-                        <div id="medical-detail-container" style="margin-top: 1rem;">
-                            <textarea name="medicalDetail" id="medicalDetail" placeholder="Please specify any conditions or injuries..." style="height: 6rem;"></textarea>
-                            <p class="error-text">Please provide details about your medical discomfort.</p>
-                        </div>
+                    </div>
+                    <div id="medical-detail-container" class="field-group" style="display: none;">
+                        <label for="medicalDetail" class="sr-only">Medical Details</label>
+                        <textarea name="medicalDetail" id="medicalDetail" placeholder="Please specify any conditions or injuries..." style="height: 6rem;"></textarea>
+                        <p class="error-text">Please provide details about your medical discomfort.</p>
                     </div>
                 </div>
 
@@ -266,13 +240,17 @@
                     </div>
                     <div class="field-group">
                         <label>Relationship <span class="required">*</span></label>
-                        <input type="text" name="relationship" required placeholder="e.g. Spouse, Parent">
+                        <select name="relationship" required>
+                            <option value="" disabled selected>Select a relationship</option>
+                            <option value="mother">Mother</option>
+                            <option value="father">Father</option>
+                            <option value="spouse">Spouse</option>
+                            <option value="son-daughter">Son/Daughter</option>
+                            <option value="other">Other</option>
+                        </select>
                         <p class="error-text">Relationship is required.</p>
                     </div>
-                    <div class="field-group sm-span-2">
-                        <label>Coupon Code</label>
-                        <input type="text" name="couponCode" placeholder="Enter your code">
-                    </div>
+
                     <div class="sm-span-2" id="terms-group">
                         <div class="terms-wrapper" style="display: flex; gap: 1rem; align-items: flex-start; margin-top: 1rem; background: var(--bg-body); padding: 1rem; border-radius: 0.5rem;">
                             <input type="checkbox" id="termsCheckbox" required style="width: 1.25rem; height: 1.25rem; margin-top: 0.2rem;">
