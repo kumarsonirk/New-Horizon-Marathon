@@ -197,7 +197,12 @@ document.querySelectorAll('input[name="hasRunBefore"]').forEach(radio => {
         const pastRunDetailsContainer = document.getElementById('past-run-details-container');
         const pastDistanceInput = form.querySelector('input[name="pastDistance"]');
         const pastTimeInput = form.querySelector('input[name="pastTime"]');
-
+        
+        pastDistanceInput.addEventListener('input', function() {
+            if (this.value.length > 2) {
+                this.value = this.value.slice(0, 2);
+            }
+        });
         if (e.target.value === 'yes') {
             pastRunDetailsContainer.style.display = 'grid';
             pastDistanceInput.setAttribute('required', 'required');
