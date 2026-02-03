@@ -792,6 +792,10 @@ nav {
 
 
 @media (max-width: 600px) {
+        .event-card {
+    display: flex;
+    flex-direction: column !important;
+}
 
     .hero h1 {
     margin: 20px 0px;
