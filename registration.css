@@ -517,7 +517,7 @@ body::before {
     background: rgba(255, 255, 255, 0.399); /* Make form slightly transparent */
     backdrop-filter: blur(10px);
     border-radius: 1rem;
-    padding: 2rem;
+    padding: 1rem;
 }
 
 @media (max-width: 764px) {
