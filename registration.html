@@ -252,13 +252,21 @@
                     </div>
 
                     <div class="sm-span-2" id="terms-group">
-                        <div class="terms-wrapper" style="display: flex; gap: 1rem; align-items: flex-start; margin-top: 1rem; background: var(--bg-body); padding: 1rem; border-radius: 0.5rem;">
-                            <input type="checkbox" id="termsCheckbox" required style="width: 1.25rem; height: 1.25rem; margin-top: 0.2rem;">
-                            <label for="termsCheckbox" style="font-size: 0.8rem; font-weight: 400; color: var(--text-muted); text-transform: none;">
-                                I acknowledge that running a marathon is a strenuous activity. I hereby certify that the information provided is accurate and I agree to the <a href="#" style="color: var(--primary);">Terms and Conditions</a>.
-                            </label>
+                        <div class="terms-wrapper" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; background: var(--bg-body); padding: 1rem; border-radius: 0.5rem;">
+                            <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                                <input type="checkbox" id="termsConfirm1" class="terms-checkbox" required style="flex-shrink:0; width: 1.25rem; height: 1.25rem; margin-top: 0.2rem;">
+                                <label for="termsConfirm1" style="font-size: 0.8rem; font-weight: 400; color: var(--text-muted); text-transform: none;">
+                                    I confirm that all the information provided by me is true and accurate, and that I am medically fit to participate in this physically demanding event.
+                                </label>
+                            </div>
+                            <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                                <input type="checkbox" id="termsConfirm2" class="terms-checkbox" required style="flex-shrink:0; width: 1.25rem; height: 1.25rem; margin-top: 0.2rem;">
+                                <label for="termsConfirm2" style="font-size: 0.8rem; font-weight: 400; color: var(--text-muted); text-transform: none;">
+                                    I understand and accept that I am participating at my own risk, agree to abide by all rules and instructions issued by the organizers, and consent to receive medical treatment in case of an emergency during the event. <a href="/registration.html">Terms and Conditions</a>
+                                </label>
+                            </div>
                         </div>
-                        <p class="error-text">You must agree to the terms to proceed.</p>
+                        <p class="error-text">You must agree to all terms to proceed.</p>
                     </div>
                 </div>
 

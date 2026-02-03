@@ -2,7 +2,7 @@ let currentStep = 1;
 const totalSteps = 3;
 const form = document.getElementById('registrationForm');
 const successMessage = document.getElementById('successMessage');
-const termsCheckbox = document.getElementById('termsCheckbox');
+const termsCheckboxes = document.querySelectorAll('.terms-checkbox');
 const submitBtn = document.getElementById('submitBtn');
 
 const birthDateInput = form.querySelector('input[name="birthDate"]');
@@ -165,13 +165,18 @@ document.querySelectorAll('.numeric-only').forEach(input => {
     });
 });
 
-termsCheckbox.addEventListener('change', function() {
-    submitBtn.disabled = !this.checked;
-    submitBtn.style.opacity = this.checked ? '1' : '0.5';
-    submitBtn.style.cursor = this.checked ? 'pointer' : 'not-allowed';
-    if (this.checked) {
+function checkAllTerms() {
+    const allChecked = Array.from(termsCheckboxes).every(cb => cb.checked);
+    submitBtn.disabled = !allChecked;
+    submitBtn.style.opacity = allChecked ? '1' : '0.5';
+    submitBtn.style.cursor = allChecked ? 'pointer' : 'not-allowed';
+    if (allChecked) {
         document.getElementById('terms-group').classList.remove('has-error');
     }
+}
+
+termsCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', checkAllTerms);
 });
 
 // Listener for category selection to show the 'run before' prompt
