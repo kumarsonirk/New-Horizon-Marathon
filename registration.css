@@ -355,57 +355,9 @@ input:focus, textarea:focus {
     color: white;
 }
 
-.custom-option:checked + .custom-radio-label .dot-indicator {
-    background-color: white; /* Make the dot white when checked */
-    border-color: white; /* Border also white */
-}
 
-.custom-option:checked + .custom-radio-label .dot-indicator::after {
-    content: '✓'; /* Checkmark character */
-    color: var(--secondary); /* Checkmark color */
-    font-size: 0.8rem; /* Adjust size as needed */
-    line-height: 1; /* Ensure vertical centering */
-    display: block; /* Make it block to center */
-    font-weight: bold;
-}
 
-/* --- SKILL SLIDER --- */
-.range-container { margin: 1rem 0; }
-.range-labels {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.7rem;
-    font-weight: 700;
-    color: var(--text-muted);
-    letter-spacing: 1px;
-}
 
-input[type="range"] {
-    width: 100%;
-    height: 6px;
-    background: var(--track-grey);
-    border-radius: 5px;
-    outline: none;
-    -webkit-appearance: none;
-    padding: 0; /* Override default input padding */
-    border: none;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 20px;
-    height: 20px;
-    background: var(--primary);
-    border-radius: 50%;
-    cursor: pointer;
-    border: 2px solid white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    transition: transform 0.1s;
-}
-
-input[type="range"]::-webkit-slider-thumb:hover {
-    transform: scale(1.2);
-}
 
 /* --- BUTTONS --- */
 .btn-container {

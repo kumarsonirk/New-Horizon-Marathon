@@ -146,12 +146,16 @@ if (birthDateInput) {
 
 function toggleMedicalRequirement(isRequired) {
     const textarea = document.getElementById('medicalDetail');
+    const container = document.getElementById('medical-detail-container');
+
     if (isRequired) {
+        container.style.display = 'block';
         textarea.setAttribute('required', 'required');
     } else {
+        container.style.display = 'none';
         textarea.removeAttribute('required');
         textarea.classList.remove('input-error');
-        document.getElementById('medical-detail-container').classList.remove('has-error');
+        container.classList.remove('has-error');
     }
 }
 
@@ -168,6 +172,47 @@ termsCheckbox.addEventListener('change', function() {
     if (this.checked) {
         document.getElementById('terms-group').classList.remove('has-error');
     }
+});
+
+// Listener for category selection to show the 'run before' prompt
+document.querySelectorAll('input[name="category"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+        const pastRunContainer = document.getElementById('past-run-container');
+        const hasRunBeforeRadios = form.querySelectorAll('input[name="hasRunBefore"]');
+
+        const selectedCategory = form.querySelector('input[name="category"]:checked');
+        if (selectedCategory) {
+            pastRunContainer.style.display = 'flex';
+            hasRunBeforeRadios.forEach(r => r.setAttribute('required', 'required'));
+        } else {
+            pastRunContainer.style.display = 'none';
+            hasRunBeforeRadios.forEach(r => r.removeAttribute('required'));
+        }
+    });
+});
+
+// Listener for 'has run before' radio buttons to show details
+document.querySelectorAll('input[name="hasRunBefore"]').forEach(radio => {
+    radio.addEventListener('change', (e) => {
+        const pastRunDetailsContainer = document.getElementById('past-run-details-container');
+        const pastDistanceInput = form.querySelector('input[name="pastDistance"]');
+        const pastTimeInput = form.querySelector('input[name="pastTime"]');
+
+        if (e.target.value === 'yes') {
+            pastRunDetailsContainer.style.display = 'grid';
+            pastDistanceInput.setAttribute('required', 'required');
+            pastTimeInput.setAttribute('required', 'required');
+        } else {
+            pastRunDetailsContainer.style.display = 'none';
+            pastDistanceInput.removeAttribute('required');
+            pastTimeInput.removeAttribute('required');
+            // Also clear errors if any
+            pastDistanceInput.closest('.field-group').classList.remove('has-error');
+            pastDistanceInput.classList.remove('input-error');
+            pastTimeInput.closest('.field-group').classList.remove('has-error');
+            pastTimeInput.classList.remove('input-error');
+        }
+    });
 });
 
 function validateEmail(email) {
@@ -194,8 +239,8 @@ function validateStep(step) {
                     inputValid = false;
                     const groupContainer = input.closest('#gender-group') ||
                                             input.closest('#category-group') ||
-                                            input.closest('#experience-group') ||
-                                            input.closest('#medical-group');
+                                            input.closest('#medical-group') ||
+                                            input.closest('#past-run-group');
                     if (groupContainer) groupContainer.classList.add('has-error');
                 }
             }
@@ -223,6 +268,45 @@ function validateStep(step) {
                     input.nextElementSibling.textContent = 'Please enter a valid date of birth.';
                 }
             }
+        } else if (input.type === 'file' && input.name === 'idCard') {
+            // Find the error text element associated with this input
+            const parentFieldGroup = input.closest('.field-group');
+            const errorTextElement = parentFieldGroup ? parentFieldGroup.querySelector('.error-text') : null;
+
+            if (input.files.length === 0) {
+                inputValid = false;
+                if (errorTextElement) errorTextElement.textContent = 'Please upload your ID card.';
+            } else {
+                const file = input.files[0];
+                const maxSize = 2 * 1024 * 1024; // 2MB
+
+                // Validate file type
+                const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+                if (!allowedTypes.includes(file.type)) {
+                    inputValid = false;
+                    if (errorTextElement) errorTextElement.textContent = 'Only JPG, PNG, or PDF files are allowed.';
+                } 
+                // Validate file size
+                else if (file.size > maxSize) {
+                    inputValid = false;
+                    if (errorTextElement) errorTextElement.textContent = 'File size must be 2MB or less.';
+                } else {
+                    // Reset to default message if valid
+                    if (errorTextElement) errorTextElement.textContent = 'Please upload your ID card.'; 
+                }
+            }
+        } else if (input.name === 'pastDistance') {
+            if (input.value <= 0) {
+                inputValid = false;
+            }
+        } else if (input.name === 'pastTime') {
+            const timeRegex = /^\d{1,2}:[0-5]\d:[0-5]\d$/;
+            if (!timeRegex.test(input.value)) {
+                inputValid = false;
+                input.nextElementSibling.textContent = "Please use HH:MM:SS format.";
+            } else {
+                 input.nextElementSibling.textContent = "Please enter time in HH:MM:SS format.";
+            }
         } else if (input.type === 'checkbox') {
             if (!input.checked) {
                 inputValid = false;
@@ -245,6 +329,8 @@ function validateStep(step) {
             }
         }
     });
+
+
 
     // Validate Coupon Code (Optional but must be 10 digits if entered)
     const couponInput = currentSection.querySelector('input[name="couponCode"]');
@@ -333,3 +419,15 @@ form.addEventListener('input', (e) => {
         }
     }
 });
+
+const idCardInput = document.getElementById('idCard');
+if (idCardInput) {
+    const filenameSpan = document.querySelector('.file-upload-filename');
+    idCardInput.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files.length > 0) {
+            filenameSpan.textContent = e.target.files[0].name;
+        } else {
+            filenameSpan.textContent = 'No file selected';
+        }
+    });
+}
