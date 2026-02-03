@@ -1,0 +1,28 @@
+/* Add any page-specific styles for bulk-registration.html here */
+
+.page-container {
+    align-items: center;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+/* Ensure the file upload and download buttons align nicely on larger screens */
+@media (min-width: 640px) {
+    .grid-cols-2 {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.file-upload-label.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    border-color: var(--border-color); /* Neutral border color */
+    background-color: var(--bg-body); /* Neutral background */
+    color: var(--text-muted); /* Muted text color */
+}
+
+.file-upload-label.disabled:hover {
+    border-color: var(--border-color); /* Prevent hover effect */
+    color: var(--text-muted);
+    background-color: var(--bg-body);
+}

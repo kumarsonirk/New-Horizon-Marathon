@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Horizon Unity Run - Bulk Registration</title>
+
+    <!-- Style sheets -->
+    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="registration.css">
+    <link rel="stylesheet" href="bulk-registration.css">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="video-background">
+        <video autoplay muted loop playsinline poster="assets/marathon_fallback.jpg">
+            <source src="assets/marathon_video.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <!-- Top Logos -->
+    <div class="top-bar no-print">
+        <img src="assets/marathon_logo.png" alt="NHCE Logo" class="top-logo">
+        <img src="assets/nhce_white_logo.png" alt="Marathon Logo" class="top-logo">
+    </div>
+
+    <div class="page-container">
+        <div class="max-w-3xl">
+            <header class="no-print">
+                <h1><span>Bulk</span> Registration</h1>
+                <p class="header-subtitle">For companies and large groups.</p>
+            </header>
+    
+            <form id="bulkRegistrationForm" class="form-card" novalidate>
+                <!-- SECTION 1: Company Information -->
+                <div class="section-header">
+                    <h2>01. Organization Details</h2>
+                    <p>Please provide the main contact information for your organization.</p>
+                </div>
+                <div class="grid grid-cols-2">
+                    <div class="field-group sm-span-2">
+                        <label for="companyName">Company Name <span class="required">*</span></label>
+                        <input type="text" id="companyName" name="companyName" required placeholder="e.g. ACME Corporation">
+                        <p class="error-text">Company name is required.</p>
+                    </div>
+                    <div class="field-group">
+                        <label for="contactName">Contact Person <span class="required">*</span></label>
+                        <input type="text" id="contactName" name="contactName" required placeholder="e.g. Jane Doe">
+                        <p class="error-text">Contact person's name is required.</p>
+                    </div>
+                    <div class="field-group">
+                        <label for="contactEmail">Contact Email <span class="required">*</span></label>
+                        <input type="email" id="contactEmail" name="contactEmail" required placeholder="e.g. jane@example.com">
+                        <p class="error-text">A valid email address is required.</p>
+                    </div>
+                </div>
+
+                <!-- SECTION 2: Participant Data -->
+                <div class="section-header" style="margin-top: 2.5rem;">
+                    <h2>02. Participant Data</h2>
+                    <p>Download the template, fill it with participant details, and upload it below.</p>
+                </div>
+                <div class="grid grid-cols-2" style="align-items: center;">
+                    <div class="field-group">
+                        <label>Download Template</label>
+                        <button type="button" id="downloadTemplateBtn" class="btn-outline">
+                            <span>Download .CSV Template</span>
+                        </button>
+                        <p class="info-text">Use this template to format your participant list.</p>
+                    </div>
+                    <div class="field-group">
+                        <label for="bulk-upload-file">Upload File <span class="required">*</span></label>
+                        <div class="file-upload-wrapper">
+                            <input type="file" id="bulk-upload-file" name="participantFile" class="file-upload-input" required accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" disabled>
+                            <label for="bulk-upload-file" class="file-upload-label disabled">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                <span>Choose file...</span>
+                            </label>
+                            <span class="file-upload-filename" id="file-upload-filename">No file selected</span>
+                        </div>
+                        <p class="error-text">Please upload the completed participant file.</p>
+                    </div>
+                </div>
+
+                <div class="btn-container">
+                    <button type="submit" id="submitBtn" class="btn-primary"><span>Submit Bulk Registration</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Script file -->
+    <script src="bulk-registration.js"></script>
+</body>
+</html>
