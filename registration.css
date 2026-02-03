@@ -548,3 +548,97 @@ body::before {
         border-radius: 0;
     }
 }
+
+/* Custom styles for age display and PDF link */
+.age-display-text {
+    font-size: 0.875rem; /* Equivalent to text-sm */
+    color: var(--text-muted); /* Equivalent to text-gray-600 */
+    margin-top: 0.25rem; /* Equivalent to mt-1 */
+    display: block; /* To ensure margin-top works */
+}
+
+.pdf-link {
+    font-size: 0.875rem; /* Equivalent to text-sm */
+    color: var(--info-link); /* Blue for links */
+    margin-top: 0.25rem; /* Equivalent to mt-1 */
+    text-decoration: none; /* Remove default underline */
+    display: block; /* To ensure margin-top works */
+}
+
+.pdf-link:hover {
+    text-decoration: underline; /* Equivalent to hover:underline */
+}
+
+.info-text {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    font-style: italic;
+}
+
+.has-error .file-upload-label {
+    border-color: var(--error);
+    color: var(--error);
+}
+
+
+/* --- FILE UPLOAD STYLES --- */
+.file-upload-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.file-upload-input {
+    /* Hide the ugly default input */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+.file-upload-label {
+    /* Style this like a button */
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--bg-body);
+    border: 2px dashed var(--border-color);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: all 0.2s;
+}
+
+.file-upload-label:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background-color: #fff7ed;
+}
+
+.file-upload-filename {
+    font-size: 0.9rem;
+    color: var(--text-main);
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (max-width: 764px) {
+    .file-upload-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .file-upload-filename {
+        font-size: 0.6rem;
+    }
+}

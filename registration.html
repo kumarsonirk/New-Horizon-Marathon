@@ -84,6 +84,11 @@
                         <label>Date of Birth <span class="required">*</span></label>
                         <input type="date" name="birthDate" required>
                         <p class="error-text">Please enter a valid date of birth.</p>
+                        <div id="ageInfoContainer" style="display: none;">
+                            <span id="ageDisplay" class="age-display-text"></span>
+                            <a href="assets/PODIUM FINISHERS FROM THE RACE.pdf" target="_blank" class="pdf-link">View Age Categories</a>
+                        </div>
+                        <input type="hidden" name="ageCategoryRange" id="ageCategoryRangeInput">
                     </div>
 
                     
@@ -246,12 +251,10 @@
                         <input type="text" name="relationship" required placeholder="e.g. Spouse, Parent">
                         <p class="error-text">Relationship is required.</p>
                     </div>
-
                     <div class="field-group sm-span-2">
                         <label>Coupon Code</label>
                         <input type="text" name="couponCode" placeholder="Enter your code">
                     </div>
-
                     <div class="sm-span-2" id="terms-group">
                         <div class="terms-wrapper" style="display: flex; gap: 1rem; align-items: flex-start; margin-top: 1rem; background: var(--bg-body); padding: 1rem; border-radius: 0.5rem;">
                             <input type="checkbox" id="termsCheckbox" required style="width: 1.25rem; height: 1.25rem; margin-top: 0.2rem;">
