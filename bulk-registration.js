@@ -16,13 +16,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Download CSV Template Logic
     downloadBtn.addEventListener('click', () => {
         const headers = [
-            "FirstName", 
-            "LastName", 
-            "Email", 
-            "PhoneNumber", 
-            "DateOfBirth (YYYY-MM-DD)", 
-            "Gender (male/female)", 
-            "Distance (3k/5k/10k)"
+            "first_name", 
+            "last_name", 
+            "email", 
+            "phone", 
+            "birth_date", 
+            "gender", 
+            "category", 
+            "previous_marathon_participation", 
+            "farthest_distance_run_km", 
+            "time_for_that_distance", 
+            "medical", 
+            "medical_detail", 
+            "emergency_name", 
+            "emergency_phone", 
+            "relationship"
         ];
         const csvContent = "data:text/csv;charset=utf-8," + headers.join(",");
         const encodedUri = encodeURI(csvContent);
