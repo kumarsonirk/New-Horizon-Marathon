@@ -18,7 +18,7 @@ $birthDate   = clean($_POST['birthDate'] ?? '');
 $gender      = clean($_POST['gender'] ?? '');
 $tshirtSize  = clean($_POST['tshirtSize'] ?? '');
 $ageCategoryRange = clean($_POST['ageCategoryRange'] ?? '');
-// $couponCode  = clean($_POST['couponCode'] ?? '');
+$couponCode  = clean($_POST['couponCode'] ?? '');
  
 // STEP 2 – Race Details
 $category        = clean($_POST['category'] ?? '');
