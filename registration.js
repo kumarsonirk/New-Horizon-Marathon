@@ -22,7 +22,7 @@ const AGE_CATEGORIES_BY_DISTANCE = {
         { min: 51, max: Infinity, displayLabel: "51 years of age & above", valueLabel: "51+" },
     ],
     '5k': [
-        { min: 12, max: 17, displayLabel: "12 to 17 years of age", valueLabel: "12-17" },
+        { min: 14, max: 17, displayLabel: "14 to 17 years of age", valueLabel: "14-17" },
         { min: 18, max: 30, displayLabel: "18 to 30 years of age", valueLabel: "18-30" },
         { min: 31, max: 40, displayLabel: "31 to 40 years of age", valueLabel: "31-40" },
         { min: 41, max: 50, displayLabel: "41 to 50 years of age", valueLabel: "41-50" },
