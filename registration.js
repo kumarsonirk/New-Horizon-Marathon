@@ -165,14 +165,29 @@ document.querySelectorAll('.numeric-only').forEach(input => {
     });
 });
 
+// New function to check overall form validity and update submit button state
+function updateSubmitButtonState() {
+    const isStep1Valid = validateStep(1, false); // Check validity without displaying errors
+    const isStep2Valid = validateStep(2, false);
+    const isStep3Valid = validateStep(3, false); // This will include terms validation
+
+    const isFormFullyValid = isStep1Valid && isStep2Valid && isStep3Valid;
+
+    submitBtn.disabled = !isFormFullyValid;
+    submitBtn.style.opacity = isFormFullyValid ? '1' : '0.5';
+    submitBtn.style.cursor = isFormFullyValid ? 'pointer' : 'not-allowed';
+}
+
+// Modify checkAllTerms to remove its direct control over submitBtn
+// and ensure it still handles the terms-group error class.
 function checkAllTerms() {
     const allChecked = Array.from(termsCheckboxes).every(cb => cb.checked);
-    submitBtn.disabled = !allChecked;
-    submitBtn.style.opacity = allChecked ? '1' : '0.5';
-    submitBtn.style.cursor = allChecked ? 'pointer' : 'not-allowed';
-    if (allChecked) {
+    if (!allChecked) {
+        document.getElementById('terms-group').classList.add('has-error');
+    } else {
         document.getElementById('terms-group').classList.remove('has-error');
     }
+    updateSubmitButtonState(); // Update submit button state after terms change
 }
 
 termsCheckboxes.forEach(checkbox => {
@@ -193,6 +208,7 @@ document.querySelectorAll('input[name="category"]').forEach(radio => {
             pastRunContainer.style.display = 'none';
             hasRunBeforeRadios.forEach(r => r.removeAttribute('required'));
         }
+        updateSubmitButtonState(); // Update submit button state after category change
     });
 });
 
@@ -222,6 +238,7 @@ document.querySelectorAll('input[name="hasRunBefore"]').forEach(radio => {
             pastTimeInput.closest('.field-group').classList.remove('has-error');
             pastTimeInput.classList.remove('input-error');
         }
+        updateSubmitButtonState(); // Update submit button state after 'has run before' change
     });
 });
 
@@ -230,13 +247,15 @@ function validateEmail(email) {
     return re.test(String(email).toLowerCase());
 }
 
-function validateStep(step) {
+function validateStep(step, displayErrors = true) {
     const currentSection = document.getElementById(`step${step}`);
     const inputs = currentSection.querySelectorAll('input[required], select[required], textarea[required]');
     let isValid = true;
 
-    currentSection.querySelectorAll('.has-error').forEach(el => el.classList.remove('has-error'));
-    currentSection.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+    if (displayErrors) {
+        currentSection.querySelectorAll('.has-error').forEach(el => el.classList.remove('has-error'));
+        currentSection.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+    }
 
     inputs.forEach(input => {
         let inputValid = true;
@@ -251,7 +270,7 @@ function validateStep(step) {
                                             input.closest('#category-group') ||
                                             input.closest('#medical-group') ||
                                             input.closest('#past-run-group');
-                    if (groupContainer) groupContainer.classList.add('has-error');
+                    if (groupContainer && displayErrors) groupContainer.classList.add('has-error');
                 }
             }
         } else if (input.type === 'email') {
@@ -269,13 +288,13 @@ function validateStep(step) {
                 const dob = new Date(input.value);
 
                 if (dob > today) {
-                    input.nextElementSibling.textContent = 'Date of birth cannot be in the future.';
+                    if (displayErrors) input.nextElementSibling.textContent = 'Date of birth cannot be in the future.';
                     inputValid = false;
                 } else if (chronologicalAge < 6) { // Minimum age check
-                    input.nextElementSibling.textContent = 'You must be at least 6 years old to register.';
+                    if (displayErrors) input.nextElementSibling.textContent = 'You must be at least 6 years old to register.';
                     inputValid = false;
                 } else {
-                    input.nextElementSibling.textContent = 'Please enter a valid date of birth.';
+                    if (displayErrors) input.nextElementSibling.textContent = 'Please enter a valid date of birth.';
                 }
             }
         } else if (input.type === 'file' && input.name === 'idCard') {
@@ -285,7 +304,7 @@ function validateStep(step) {
 
             if (input.files.length === 0) {
                 inputValid = false;
-                if (errorTextElement) errorTextElement.textContent = 'Please upload your ID card.';
+                if (errorTextElement && displayErrors) errorTextElement.textContent = 'Please upload your ID card.';
             } else {
                 const file = input.files[0];
                 const maxSize = 2 * 1024 * 1024; // 2MB
@@ -294,15 +313,15 @@ function validateStep(step) {
                 const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
                 if (!allowedTypes.includes(file.type)) {
                     inputValid = false;
-                    if (errorTextElement) errorTextElement.textContent = 'Only JPG, PNG, or PDF files are allowed.';
+                    if (errorTextElement && displayErrors) errorTextElement.textContent = 'Only JPG, PNG, or PDF files are allowed.';
                 } 
                 // Validate file size
                 else if (file.size > maxSize) {
                     inputValid = false;
-                    if (errorTextElement) errorTextElement.textContent = 'File size must be 2MB or less.';
+                    if (errorTextElement && displayErrors) errorTextElement.textContent = 'File size must be 2MB or less.';
                 } else {
                     // Reset to default message if valid
-                    if (errorTextElement) errorTextElement.textContent = 'Please upload your ID card.'; 
+                    if (errorTextElement && displayErrors) errorTextElement.textContent = 'Please upload your ID card.'; 
                 }
             }
         } else if (input.name === 'pastDistance') {
@@ -313,14 +332,14 @@ function validateStep(step) {
             const timeRegex = /^\d{1,2}:[0-5]\d:[0-5]\d$/;
             if (!timeRegex.test(input.value)) {
                 inputValid = false;
-                input.nextElementSibling.textContent = "Please use HH:MM:SS format.";
+                if (displayErrors) input.nextElementSibling.textContent = "Please use HH:MM:SS format.";
             } else {
-                 input.nextElementSibling.textContent = "Please enter time in HH:MM:SS format.";
+                if (displayErrors) input.nextElementSibling.textContent = "Please enter time in HH:MM:SS format.";
             }
         } else if (input.type === 'checkbox') {
             if (!input.checked) {
                 inputValid = false;
-                input.closest('#terms-group').classList.add('has-error');
+                if (displayErrors) input.closest('#terms-group').classList.add('has-error');
             }
         } else if (!input.value.trim()) {
             inputValid = false;
@@ -328,18 +347,28 @@ function validateStep(step) {
 
         if (!inputValid) {
             isValid = false;
-            const fieldGroup = input.closest('.field-group');
-            if (fieldGroup) {
-                fieldGroup.classList.add('has-error');
-            }
-            
-            // Add input-error for inputs that need it (text, email, etc.)
-            if (input.type !== 'radio' && input.type !== 'checkbox' && input.type !== 'file') {
-                 input.classList.add('input-error');
+            if (displayErrors) {
+                const fieldGroup = input.closest('.field-group');
+                if (fieldGroup) {
+                    fieldGroup.classList.add('has-error');
+                }
+                
+                // Add input-error for inputs that need it (text, email, etc.)
+                if (input.type !== 'radio' && input.type !== 'checkbox' && input.type !== 'file') {
+                     input.classList.add('input-error');
+                }
             }
         }
     });
 
+    // Specific terms and conditions validation, only if displayErrors is true
+    if (step === 3 && displayErrors) {
+        const allTermsChecked = Array.from(termsCheckboxes).every(cb => cb.checked);
+        if (!allTermsChecked) {
+            isValid = false;
+            document.getElementById('terms-group').classList.add('has-error');
+        }
+    }
 
 
     // Validate Coupon Code (Optional but must be 10 digits if entered)
@@ -347,9 +376,11 @@ function validateStep(step) {
     if (couponInput && couponInput.value.trim() !== '') {
         if (couponInput.value.length !== 10) {
             isValid = false;
-            const fieldGroup = couponInput.closest('.field-group');
-            if (fieldGroup) fieldGroup.classList.add('has-error');
-            couponInput.classList.add('input-error');
+            if (displayErrors) {
+                const fieldGroup = couponInput.closest('.field-group');
+                if (fieldGroup) fieldGroup.classList.add('has-error');
+                couponInput.classList.add('input-error');
+            }
         }
     }
 
@@ -357,7 +388,7 @@ function validateStep(step) {
 }
 
 window.nextStep = function(step) {
-    if (validateStep(step)) {
+    if (validateStep(step, true)) {
         const currentEl = document.getElementById(`step${step}`);
         currentEl.classList.add('hidden-step');
         
@@ -367,6 +398,7 @@ window.nextStep = function(step) {
             nextEl.classList.remove('hidden-step');
             updateProgress();
             window.scrollTo({ top: 0, behavior: 'smooth' });
+            updateSubmitButtonState(); // Call after step change
         }, 300);
     }
 };
@@ -381,14 +413,19 @@ window.prevStep = function(step) {
         prevEl.classList.remove('hidden-step');
         updateProgress();
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        updateSubmitButtonState(); // Call after step change
     }, 300);
 };
 
 form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    if (validateStep(3) && validateStep(2) && validateStep(1)) { // Re-validate all steps
-        window.location.href = 'thank-you.html';
+    // Re-validate all steps. If any step is invalid, prevent submission.
+    // The validation functions will add error classes, which are handled by the CSS.
+    if (!validateStep(1, true) || !validateStep(2, true) || !validateStep(3, true)) {
+        e.preventDefault(); // Prevent submission if validation fails
     }
+    // If all steps are valid, the form will submit naturally to 'process_payment1.php'
+    // No need for window.location.href = 'thank-you.html'; here, as the server-side
+    // script (process_payment1.php) should handle redirection after processing.
 });
 
 function updateProgress() {
