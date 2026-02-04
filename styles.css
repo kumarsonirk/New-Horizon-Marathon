@@ -144,7 +144,7 @@ nav {
 .hero-content {
     position: relative;
     z-index: 10;
-    max-width: 750px;
+    max-width: 1200px;
     padding-top: 70px;
 }
 
@@ -866,10 +866,7 @@ nav {
 /* Forces a 2x2 grid on small phones to prevent horizontal overlapping */
 @media (max-width: 440px) {
 
-    .event-card {
-    display: flex;
-    flex-direction: column !important;
-}
+
     .hero-timer {
         gap: 40px;
         max-width: 220px;
