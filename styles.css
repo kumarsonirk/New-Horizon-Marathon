@@ -799,7 +799,7 @@ nav {
 .acc-row.active .acc-body {
     max-height: 1000px;
     transition: max-height 0.8s ease-in;
-    padding: 20px;
+    padding: 0px;
     margin-bottom: 10px;
 }
 
