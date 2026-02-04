@@ -164,6 +164,13 @@ nav {
     max-width: 550px;
 }
 
+.prize-timer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
 .hero-cta {
     display: flex;
     align-items: center;
@@ -275,6 +282,7 @@ nav {
     display: flex;
     gap: 15px;
     flex-wrap: wrap;
+    min-width: 500px;
 }
 
 .timer-unit {
@@ -746,6 +754,10 @@ nav {
         margin: 0 auto;
     }
 
+    .prize-timer {
+        flex-direction: column;
+    }
+
     .hero-cta {
         justify-content: center;
     }
@@ -753,6 +765,7 @@ nav {
     .hero-timer {
         justify-content: center;
         flex-wrap: wrap;
+        min-width: auto;
     }
 
     .about-container {
@@ -799,6 +812,7 @@ nav {
 
     .hero h1 {
     margin: 20px 0px;
+    font-size: 2.8rem;
 }
 
     .hero p {
@@ -915,4 +929,165 @@ nav {
 .logo .nhce_logo {
     width: 37%;
 }
+
+    .hero {
+        height: auto;
+        min-height: 100vh;
+        padding-top: 140px;
+        padding-bottom: 60px;
+        align-items: flex-start;
+    }
+
+    .hero-content {
+        padding-top: 0;
+    }
+}
+
+/* Prize Section */
+.prize-section {
+    background: linear-gradient(135deg, rgba(255, 94, 98, 0.1), rgba(255, 153, 102, 0.1));
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: -10%;
+    width: 100%;
+    max-width: 350px;
+    margin-left: 30px;
+}
+.prize-header h3 {
+    text-align: center;
+    color: #fff;
+    font-size: 1.8rem;
+    line-height: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    text-transform: capitalize;
+    letter-spacing: 2px;
+}
+
+.prize-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.prize-tabs .tab-btn {
+    background: transparent;
+    border: 1px solid var(--accent-pink);
+    color: var(--accent-pink);
+    padding: 8px 40px;
+    margin: 0 5px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    font-weight: 700;
+}
+
+.prize-tabs .tab-btn.active,
+.prize-tabs .tab-btn:hover {
+    background: var(--gradient-main);
+    color: #fff;
+    border-color: transparent;
+}
+
+.prize-grid {
+    display: none;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.prize-grid.active {
+    display: block;
+}
+
+.prize-card {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.prize-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.prize-card h4 {
+    color: var(--accent-pink);
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+}
+
+.prize-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.prize-card ul li {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 1rem;
+}
+
+.prize-card ul li:last-child {
+    border-bottom: none;
+}
+
+.prize-card ul li span {
+    color: #ccc;
+}
+
+.prize-card ul li strong {
+    color: #fff;
+    font-weight: 700;
+    /* font-family: 'Orbitron', sans-serif; */
+}
+
+@media (max-width: 1100px) {
+    .prize-section {
+        margin-left: 0;
+        margin-top: 30px;
+        max-width: 100%;
+    }
+}
+
+/* Association Section */
+.association-section {
+    padding: 60px 5%;
+    background: #080620;
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.association-section h2 {
+    font-size: 3rem;
+    margin-bottom: 50px;
+    color: var(--white);
+}
+
+.sponsors-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+    flex-wrap: wrap;
+}
+
+.sponsors-grid img {
+    max-height: 170px;
+    opacity: 1;
+    filter: grayscale(0);
+    transition: all 0.3s ease;
+}
+
+.sponsors-grid img:hover {
+    opacity: 0.6;
+    filter: grayscale(1);
+    transform: scale(1.05);
 }
