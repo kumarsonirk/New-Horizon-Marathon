@@ -39,6 +39,10 @@
             <header class="no-print">
                 <h1><span>New Horizon</span> UNITY RUN <span>2026</span></h1>
             </header>
+            <!-- Header -->
+            <header class="no-print">
+                <h1><span>New Horizon</span> UNITY RUN <span>2026</span></h1>
+            </header>
         
         
             <div class="progress-container no-print">
@@ -61,9 +65,36 @@
                     </div>
                 </div>
             </div>
+            <div class="progress-container no-print">
+                <div class="progress-track">
+                    <div id="progress-bar" style="width: 0%"></div>
+                </div>
+                
+                <div class="steps-wrapper">
+                    <div class="step-item active" id="step-item-1">
+                        <div class="step-dot active">1</div>
+                        <span class="step-label">Runner</span>
+                    </div>
+                    <div class="step-item" id="step-item-2">
+                        <div class="step-dot">2</div>
+                        <span class="step-label">Distance</span>
+                    </div>
+                    <div class="step-item" id="step-item-3">
+                        <div class="step-dot">3</div>
+                        <span class="step-label">Finish</span>
+                    </div>
+                </div>
+            </div>
         
             <form id="registrationForm" action="process_payment1.php" method="post" novalidate>
+            <form id="registrationForm" action="process_payment1.php" method="post" novalidate>
             
+                <!-- SECTION 1: Personal Information -->
+                <section id="step1" class="form-card step-transition">
+                    <div class="section-header">
+                        <h2>01. Runner Profile</h2>
+                        <p>Who will be crossing the finish line?</p>
+                    </div>
                 <!-- SECTION 1: Personal Information -->
                 <section id="step1" class="form-card step-transition">
                     <div class="section-header">
@@ -118,7 +149,36 @@
                             </div>
                             <p class="error-text">Please select a gender.</p>
                         </div>
+                        
+                        <div class="field-group sm-span-2" id="gender-group">
+                            <label>Gender <span class="required">*</span></label>
+                            <div class="radio-grid">
+                                <div>
+                                    <input type="radio" name="gender" id="male" value="male" class="sr-only custom-option" required>
+                                    <label for="male" class="custom-radio-label">Male</label>
+                                </div>
+                                <div>
+                                    <input type="radio" name="gender" id="female" value="female" class="sr-only custom-option">
+                                    <label for="female" class="custom-radio-label">Female</label>
+                                </div>
+                            </div>
+                            <p class="error-text">Please select a gender.</p>
+                        </div>
 
+                        <div class="field-group sm-span-2">
+                            <label for="tshirtSize">T-Shirt Size <span class="required">*</span></label>
+                            <select id="tshirtSize" name="tshirtSize" required>
+                                <option value="" disabled selected>Select Size</option>
+                                <option value="xs">XS</option>
+                                <option value="s">S</option>
+                                <option value="m">M</option>
+                                <option value="l">L</option>
+                                <option value="xl">XL</option>
+                                <option value="xxl">XXL</option>
+                            </select>
+                            <p class="error-text">Please select a T-shirt size.</p>
+                        </div>
+                    </div>
                         <div class="field-group sm-span-2">
                             <label for="tshirtSize">T-Shirt Size <span class="required">*</span></label>
                             <select id="tshirtSize" name="tshirtSize" required>
@@ -139,6 +199,12 @@
                     </div>
                 </section>
 
+                <!-- SECTION 2: Race & Experience -->
+                <section id="step2" class="form-card step-transition hidden-step">
+                    <div class="section-header">
+                        <h2>02. Race Details</h2>
+                        <p>Select your challenge and experience level.</p>
+                    </div>
                 <!-- SECTION 2: Race & Experience -->
                 <section id="step2" class="form-card step-transition hidden-step">
                     <div class="section-header">
@@ -227,6 +293,11 @@
                         <button type="button" onclick="nextStep(2)" class="btn-primary"><span>NEXT: EMERGENCY</span></button>
                     </div>
                 </section>
+                    <div class="btn-container btn-between">
+                        <button type="button" onclick="prevStep(2)" class="btn-ghost">BACK</button>
+                        <button type="button" onclick="nextStep(2)" class="btn-primary"><span>NEXT: EMERGENCY</span></button>
+                    </div>
+                </section>
 
                 <!-- SECTION 3: Emergency & Final -->
                 <section id="step3" class="form-card step-transition hidden-step">
@@ -234,7 +305,36 @@
                         <h2>03. Emergency Contact</h2>
                         <p>Safety first. Who do we call?</p>
                     </div>
+                <!-- SECTION 3: Emergency & Final -->
+                <section id="step3" class="form-card step-transition hidden-step">
+                    <div class="section-header">
+                        <h2>03. Emergency Contact</h2>
+                        <p>Safety first. Who do we call?</p>
+                    </div>
 
+                    <div class="grid grid-cols-2">
+                        <div class="field-group sm-span-2">
+                            <label>Contact Full Name <span class="required">*</span></label>
+                            <input type="text" name="emergencyName" required>
+                            <p class="error-text">Full name is required.</p>
+                        </div>
+                        <div class="field-group">
+                            <label>Phone Number <span class="required">*</span></label>
+                            <input type="tel" name="emergencyPhone" maxlength="10" placeholder="1234567890" required class="numeric-only">
+                            <p class="error-text">Exactly 10 digits required.</p>
+                        </div>
+                        <div class="field-group">
+                            <label>Relationship <span class="required">*</span></label>
+                            <select name="relationship" required>
+                                <option value="" disabled selected>Select a relationship</option>
+                                <option value="mother">Mother</option>
+                                <option value="father">Father</option>
+                                <option value="spouse">Spouse</option>
+                                <option value="son-daughter">Son/Daughter</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <p class="error-text">Relationship is required.</p>
+                        </div>
                     <div class="grid grid-cols-2">
                         <div class="field-group sm-span-2">
                             <label>Contact Full Name <span class="required">*</span></label>
@@ -277,7 +377,33 @@
                             <p class="error-text">You must agree to all terms to proceed.</p>
                         </div>
                     </div>
+                        <div class="sm-span-2" id="terms-group">
+                            <div class="terms-wrapper" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; background: var(--bg-body); padding: 1rem; border-radius: 0.5rem;">
+                                <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                                    <input type="checkbox" id="termsConfirm1" class="terms-checkbox" required style="flex-shrink:0; width: 1.25rem; height: 1.25rem; margin-top: 0.2rem;">
+                                    <label for="termsConfirm1" style="font-size: 0.8rem; font-weight: 400; color: var(--text-muted); text-transform: none;">
+                                        I confirm that all the information provided by me is true and accurate, and that I am medically fit to participate in this physically demanding event.
+                                    </label>
+                                </div>
+                                <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                                    <input type="checkbox" id="termsConfirm2" class="terms-checkbox" required style="flex-shrink:0; width: 1.25rem; height: 1.25rem; margin-top: 0.2rem;">
+                                    <label for="termsConfirm2" style="font-size: 0.8rem; font-weight: 400; color: var(--text-muted); text-transform: none;">
+                                        I understand and accept that I am participating at my own risk, agree to abide by all rules and instructions issued by the organizers, and consent to receive medical treatment in case of an emergency during the event. <a href="registration.html">Terms and Conditions</a>
+                                    </label>
+                                </div>
+                            </div>
+                            <p class="error-text">You must agree to all terms to proceed.</p>
+                        </div>
+                    </div>
 
+                    <div class="btn-container btn-between">
+                        <button type="button" onclick="prevStep(3)" class="btn-ghost">BACK</button>
+                        <div style="display: flex; gap: 0.75rem;">
+                            <button type="submit" id="submitBtn" disabled class="btn-primary" style="opacity: 0.5; cursor: not-allowed;"><span>COMPLETE REGISTRATION</span></button>
+                        </div>
+                    </div>
+                </section>
+            </form>
                     <div class="btn-container btn-between">
                         <button type="button" onclick="prevStep(3)" class="btn-ghost">BACK</button>
                         <div style="display: flex; gap: 0.75rem;">

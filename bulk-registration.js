@@ -1,3 +1,30 @@
+/*
+    Server-Side CSV Processing Reference: Age Category Rules
+
+    When processing the uploaded CSV, the server should determine the age category based on the runner's 'birth_date' and the selected 'category' (10k, 5k, or 3k).
+
+    1. Calculate Category Age:
+       - A runner's "category age" is their chronological age on the day of the event.
+       - As per the rule, if a runner's birthday is more than 10 days before the event day, their category age is chronological age + 1. For example, a runner who is 30 years and 11 days old will have a category age of 31.
+    
+    2. Determine Age Category based on the selected distance:
+       - '10k':
+         - 14-17 years
+         - 18-30 years
+         - 31-40 years
+         - 41-50 years
+         - 51+ years
+       - '5k':
+         - 12-17 years
+         - 18-30 years
+         - 31-40 years
+         - 41-50 years
+         - 51+ years
+       - '3k':
+         - 6+ years (Fun Run - No competitive podium categories)
+
+    The `ageCategoryRange` value should be stored based on these rules.
+*/
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('bulkRegistrationForm');
     const submitBtn = document.getElementById('submitBtn');

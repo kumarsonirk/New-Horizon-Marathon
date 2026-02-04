@@ -13,25 +13,43 @@ const categoryOptions = {
     '10k': document.querySelector('input[name="category"][value="10k"]').closest('.card-radio')
 };
 
-const AGE_CATEGORIES = [
-    { min: 6, max: 11, displayLabel: "6 to 11 years of age", valueLabel: "6-11" },
-    { min: 12, max: 14, displayLabel: "12 to 14 years of age", valueLabel: "12-14" },
-    { min: 15, max: 17, displayLabel: "15 to 17 years of age", valueLabel: "15-17" },
-    { min: 18, max: 30, displayLabel: "18 to 30 years of age", valueLabel: "18-30" },
-    { min: 31, max: 40, displayLabel: "31 to 40 years of age", valueLabel: "31-40" },
-    { min: 41, max: 50, displayLabel: "41 to 50 years of age", valueLabel: "41-50" },
-    { min: 51, max: 60, displayLabel: "51 to 60 years of age", valueLabel: "51-60" },
-    { min: 61, max: Infinity, displayLabel: "61 years of age & above", valueLabel: "61+" },
-];
+const AGE_CATEGORIES_BY_DISTANCE = {
+    '10k': [
+        { min: 14, max: 17, displayLabel: "14 to 17 years of age", valueLabel: "14-17" },
+        { min: 18, max: 30, displayLabel: "18 to 30 years of age", valueLabel: "18-30" },
+        { min: 31, max: 40, displayLabel: "31 to 40 years of age", valueLabel: "31-40" },
+        { min: 41, max: 50, displayLabel: "41 to 50 years of age", valueLabel: "41-50" },
+        { min: 51, max: Infinity, displayLabel: "51 years of age & above", valueLabel: "51+" },
+    ],
+    '5k': [
+        { min: 12, max: 17, displayLabel: "12 to 17 years of age", valueLabel: "12-17" },
+        { min: 18, max: 30, displayLabel: "18 to 30 years of age", valueLabel: "18-30" },
+        { min: 31, max: 40, displayLabel: "31 to 40 years of age", valueLabel: "31-40" },
+        { min: 41, max: 50, displayLabel: "41 to 50 years of age", valueLabel: "41-50" },
+        { min: 51, max: Infinity, displayLabel: "51 years of age & above", valueLabel: "51+" },
+    ],
+    '3k': [
+        { min: 6, max: Infinity, displayLabel: "6 years of age & above", valueLabel: "6+" },
+    ]
+};
 
-function getCategoryRange(age, forDisplay = true) {
+function getCategoryRange(age, distance, forDisplay = true) {
     if (age < 6) return forDisplay ? "Not eligible to participate" : "";
-    for (const category of AGE_CATEGORIES) {
+    
+    if (!distance || !AGE_CATEGORIES_BY_DISTANCE[distance]) {
+        return ""; // No distance selected, return empty.
+    }
+
+    const categories = AGE_CATEGORIES_BY_DISTANCE[distance];
+    for (const category of categories) {
         if (age >= category.min && age <= category.max) {
+            if (distance === '3k' && forDisplay) {
+                 return "6 years of age & above (Fun Run - No podium categories)";
+            }
             return forDisplay ? category.displayLabel : category.valueLabel;
         }
     }
-    return forDisplay ? "Not categorized" : "";
+    return forDisplay ? "Not categorized for this distance" : "";
 }
 
 // New age calculation functions
@@ -85,44 +103,68 @@ function getCategoryAge(birthDateString) {
 }
 
 
-function updateDistanceOptions() {
+function updateAgeAndDistanceInfo() {
     if (!birthDateInput) return;
     const dobValue = birthDateInput.value;
     const chronologicalAge = calculateChronologicalAge(dobValue);
     const categoryAge = getCategoryAge(dobValue);
     const daysSinceBirthday = getDaysSinceLastBirthday(dobValue);
-    const categoryDisplayLabel = getCategoryRange(categoryAge, true);  // For visible text
-    const categoryValueLabel = getCategoryRange(categoryAge, false); // For hidden input
 
+    const selectedCategoryEl = form.querySelector('input[name="category"]:checked');
+    const selectedDistance = selectedCategoryEl ? selectedCategoryEl.value : null;
+
+    const categoryDisplayLabel = getCategoryRange(categoryAge, selectedDistance, true);
+    const categoryValueLabel = getCategoryRange(categoryAge, selectedDistance, false);
+
+    const dobAgeDisplay = document.getElementById('dobAgeDisplay');
+    const dobAgeInfo = document.getElementById('dobAgeInfo');
     const ageDisplay = document.getElementById('ageDisplay');
     const ageInfoContainer = document.getElementById('ageInfoContainer');
 
+    // Handle age display next to DOB input
+    if (dobAgeDisplay && dobAgeInfo) {
+        if (dobValue) {
+            dobAgeDisplay.innerHTML = `Your age is <strong>${chronologicalAge} years and ${daysSinceBirthday} days</strong>.`;
+            dobAgeInfo.style.display = 'block';
+        } else {
+            dobAgeDisplay.innerHTML = '';
+            dobAgeInfo.style.display = 'none';
+        }
+    }
+
+    // Handle category display in Step 2
     if (ageDisplay && ageInfoContainer) {
         if (dobValue) {
-            ageDisplay.innerHTML = `Your age is <strong>${chronologicalAge} years and ${daysSinceBirthday} days</strong>.<br>Your category is: <strong>${categoryDisplayLabel}</strong>.`;
-            ageInfoContainer.style.display = 'block'; // Show the container
+            let categoryText = '';
+            if (selectedDistance) {
+                categoryText = `Your category for ${selectedDistance.toUpperCase()} is: <strong>${categoryDisplayLabel}</strong>.`;
+            } else {
+                categoryText = `Please select a distance to see your age category.`;
+            }
+            ageDisplay.innerHTML = categoryText;
+            ageInfoContainer.style.display = 'block';
+
             if (ageCategoryRangeInput) {
-                ageCategoryRangeInput.value = categoryValueLabel; // Set hidden input
+                ageCategoryRangeInput.value = categoryValueLabel;
             }
         } else {
-            ageDisplay.innerHTML = ''; // Clear display
-            ageInfoContainer.style.display = 'none'; // Hide the container
+            ageDisplay.innerHTML = '';
+            ageInfoContainer.style.display = 'none';
             if (ageCategoryRangeInput) {
-                ageCategoryRangeInput.value = ''; // Clear hidden input
+                ageCategoryRangeInput.value = '';
             }
         }
     }
 
-    const selectedCategory = form.querySelector('input[name="category"]:checked');
+    const selectedCategoryRadio = form.querySelector('input[name="category"]:checked');
 
     Object.values(categoryOptions).forEach(option => option.style.display = 'none');
 
-    if (categoryAge === 0) { 
-        if (selectedCategory) selectedCategory.checked = false;
+    if (categoryAge === 0) {
+        if (selectedCategoryRadio) selectedCategoryRadio.checked = false;
         return;
     }
 
-    // Show options based on CATEGORY age
     if (categoryAge >= 6) {
         categoryOptions['3k'].style.display = 'block';
     }
@@ -133,15 +175,34 @@ function updateDistanceOptions() {
         categoryOptions['10k'].style.display = 'block';
     }
 
-    if (selectedCategory && selectedCategory.closest('.card-radio').style.display === 'none') {
-        selectedCategory.checked = false;
+    if (selectedCategoryRadio && selectedCategoryRadio.closest('.card-radio').style.display === 'none') {
+        selectedCategoryRadio.checked = false;
     }
 }
 
 if (birthDateInput) {
-    birthDateInput.addEventListener('input', updateDistanceOptions);
-    updateDistanceOptions(); // Initial call
+    birthDateInput.addEventListener('input', updateAgeAndDistanceInfo);
 }
+
+document.querySelectorAll('input[name="category"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+        updateAgeAndDistanceInfo();
+        const pastRunContainer = document.getElementById('past-run-container');
+        const hasRunBeforeRadios = form.querySelectorAll('input[name="hasRunBefore"]');
+
+        const selectedCategory = form.querySelector('input[name="category"]:checked');
+        if (selectedCategory) {
+            pastRunContainer.style.display = 'flex';
+            hasRunBeforeRadios.forEach(r => r.setAttribute('required', 'required'));
+        } else {
+            pastRunContainer.style.display = 'none';
+            hasRunBeforeRadios.forEach(r => r.removeAttribute('required'));
+        }
+        updateSubmitButtonState(); // Update submit button state after category change
+    });
+});
+
+updateAgeAndDistanceInfo();
 
 
 function toggleMedicalRequirement(isRequired) {
