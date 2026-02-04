@@ -1027,6 +1027,14 @@ nav {
     .hero-content {
         padding-top: 0;
     }
+
+    .desktop-poster {
+        display: none;
+    }
+
+    .mobile-poster {
+        display: block !important;
+    }
 }
 
 /* Prize Section */
@@ -1202,6 +1210,10 @@ nav {
     border-color: var(--accent-pink);
 }
 
+.mobile-poster {
+    display: none;
+}
+
 .lightbox {
     display: none;
     position: fixed;
@@ -1322,6 +1334,9 @@ nav {
 @media (max-width: 600px) {
     .prize-content {
         flex-direction: column;
+    }
+    .btn-main {
+        padding: 15px 15px;
     }
 }
 
