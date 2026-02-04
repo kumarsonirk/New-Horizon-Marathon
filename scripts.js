@@ -66,17 +66,18 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// Mobile Navigation Toggle
-document.addEventListener('DOMContentLoaded', () => {
-    const menuToggle = document.getElementById('mobile-menu');
-    const navLinks = document.querySelector('.nav-links');
-    const mainNav = document.querySelector('.main-nav');
-
-    if (menuToggle && navLinks && mainNav) {
-        menuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            menuToggle.classList.toggle('active');
-            mainNav.classList.toggle('active');
-        });
+function activate5kPrize() {
+    const section = document.getElementById('run-5k');
+    const prizeRow = document.getElementById('prize-pool-5k-row');
+    
+    if (section && prizeRow) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        // Deactivate siblings
+        const siblings = prizeRow.parentElement.querySelectorAll('.acc-row');
+        siblings.forEach(row => row.classList.remove('active'));
+        
+        // Activate target
+        prizeRow.classList.add('active');
     }
-});
+}

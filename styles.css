@@ -471,7 +471,8 @@ nav {
 .stat-box h4 {
     font-size: 2.5rem;
     color: var(--accent-pink);
-    margin-bottom: 5px;
+    margin-bottom: 20px;
+    line-height: 2.5rem;
 }
 
 .stat-box span {
@@ -1322,4 +1323,24 @@ nav {
     .prize-content {
         flex-direction: column;
     }
+}
+
+.prize-pool-link {
+    padding: 16px 45px;
+    border: 2px solid var(--accent-lime);
+    border-radius: 10px;
+    background: transparent;
+    color: var(--accent-lime);
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    animation: glowPulse 1.5s infinite alternate;
+    letter-spacing: 1}
+
+@keyframes glowPulse {
+    from { text-shadow: 0 0 5px rgba(204, 255, 0, 0.2); transform: scale(1); }
+    to { text-shadow: 0 0 20px rgba(204, 255, 0, 0.8), 0 0 10px rgba(204, 255, 0, 0.6); transform: scale(1.05); color: #fff; }
 }
