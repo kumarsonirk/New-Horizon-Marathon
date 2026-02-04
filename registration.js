@@ -432,15 +432,46 @@ function validateStep(step, displayErrors = true) {
     }
 
 
-    // Validate Coupon Code (Optional but must be 10 digits if entered)
+    // Validate Coupon Code (Optional but must be 'nh' followed by 10 digits if entered)
     const couponInput = currentSection.querySelector('input[name="couponCode"]');
     if (couponInput && couponInput.value.trim() !== '') {
-        if (couponInput.value.length !== 10) {
+
+        const couponValue = couponInput.value.trim();
+        const couponRegex = /^NH\d{10}$/i;
+
+        const fieldGroup = couponInput.closest('.field-group');
+        const errorTextElement = fieldGroup?.querySelector('.error-text');
+
+        if (!couponRegex.test(couponValue)) {
+
             isValid = false;
+
             if (displayErrors) {
-                const fieldGroup = couponInput.closest('.field-group');
-                if (fieldGroup) fieldGroup.classList.add('has-error');
+
+                fieldGroup?.classList.add('has-error');
                 couponInput.classList.add('input-error');
+
+                if (errorTextElement) {
+                    errorTextElement.textContent =
+                        'Coupon code must start with "NH" followed by 10 digits.';
+                    errorTextElement.style.display = 'block';
+                }
+            }
+
+        } else {
+            // Valid coupon → remove error
+
+            if (displayErrors) {
+
+                const fieldGroup = couponInput.closest('.field-group');
+                const errorTextElement = fieldGroup?.querySelector('.error-text');
+
+                fieldGroup?.classList.remove('has-error');
+                couponInput.classList.remove('input-error');
+
+                if (errorTextElement) {
+                    errorTextElement.style.display = 'none';
+                }
             }
         }
     }

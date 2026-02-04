@@ -133,9 +133,9 @@
 
                         <div class="field-group sm-span-2">
                             <label>Coupon Code</label>
-                            <input type="text" name="couponCode" maxlength="10" placeholder="Enter 10-digit code" class="numeric-only">
+                            <input type="text" name="couponCode" maxlength="12" placeholder="Enter 'NH' + 10 digits">
                             <span>(Enter coupon code to get a discount)</span>
-                            <p class="error-text">Coupon code must be exactly 10 digits.</p>
+                            <p class="error-text">Coupon code must start with "NH" followed by 10 digits.</p>
                         </div>
                     </div>
 
@@ -173,44 +173,43 @@
                                     <span class="card-sub">Challenge</span>
                                 </label>
                             </div>
-                                                    <p class="error-text">Please select a race category.</p>
-                                                </div>
+                            <p class="error-text">Please select a race category.</p>
+                        </div>
 
-                                                <div id="ageInfoContainer" style="display: none; text-align: center; margin-top: -1rem; margin-bottom: 1rem;">
-                                                    <span id="ageDisplay" class="age-display-text"></span>
-                                                    <a href="assets/PODIUM FINISHERS FROM THE RACE.pdf" target="_blank" class="pdf-link">View Age Categories</a>
-                                                </div>
-                                                <input type="hidden" name="ageCategoryRange" id="ageCategoryRangeInput">
-                            
-                                                                    <!-- Past Run Details -->
-                                                                    <div id="past-run-container" style="display: none; margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1.5rem;">
-                                                                        <div class="field-group" id="past-run-group">
-                                                                            <label>Have you participated in a marathon before? <span class="required">*</span></label>
-                                                                            <div style="display: flex; gap: 1.5rem; margin-top: 0.5rem;">
-                                                                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                                                                                    <input type="radio" name="hasRunBefore" value="yes">
-                                                                                    <span>Yes</span>
-                                                                                </label>
-                                                                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                                                                                    <input type="radio" name="hasRunBefore" value="no">
-                                                                                    <span>No</span>
-                                                                                </label>
-                                                                            </div>
-                                                                            <p class="error-text">Please select an option.</p>
-                                                                        </div>
-                                                                        <div id="past-run-details-container" class="grid grid-cols-2" style="display: none;">
-                                                                            <div class="field-group">
-                                                                                <label>Farthest Distance Run (km) <span class="required">*</span></label>
-                                                                                <input type="number" name="pastDistance" placeholder="e.g. 10" min="0" max="99">
-                                                                                <p class="error-text">Please enter a valid distance (2 digits max).</p>
-                                                                            </div>
-                                                                            <div class="field-group">
-                                                                                <label>Time for that distance <span class="required">*</span></label>
-                                                                                <input type="text" name="pastTime" placeholder="HH:MM:SS">
-                                                                                <p class="error-text">Please enter time in HH:MM:SS format.</p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>                        
+                        <div id="ageInfoContainer" style="display: none; text-align: center; margin-top: -1rem; margin-bottom: 1rem;">
+                            <span id="ageDisplay" class="age-display-text"></span>
+                            <a href="assets/PODIUM FINISHERS FROM THE RACE.pdf" target="_blank" class="pdf-link">View Age Categories</a>
+                        </div>
+                        <input type="hidden" name="ageCategoryRange" id="ageCategoryRangeInput">
+                        <!-- Past Run Details -->
+                        <div id="past-run-container" style="display: none; margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1.5rem;">
+                            <div class="field-group" id="past-run-group">
+                                <label>Have you participated in a marathon before? <span class="required">*</span></label>
+                                <div style="display: flex; gap: 1.5rem; margin-top: 0.5rem;">
+                                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                        <input type="radio" name="hasRunBefore" value="yes">
+                                        <span>Yes</span>
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                        <input type="radio" name="hasRunBefore" value="no">
+                                        <span>No</span>
+                                    </label>
+                                </div>
+                                <p class="error-text">Please select an option.</p>
+                            </div>
+                            <div id="past-run-details-container" class="grid grid-cols-2" style="display: none;">
+                                <div class="field-group">
+                                    <label>Farthest Distance Run (km) <span class="required">*</span></label>
+                                    <input type="number" name="pastDistance" placeholder="e.g. 10" min="0" max="99">
+                                    <p class="error-text">Please enter a valid distance (2 digits max).</p>
+                                </div>
+                                <div class="field-group">
+                                    <label>Time for that distance <span class="required">*</span></label>
+                                    <input type="text" name="pastTime" placeholder="HH:MM:SS">
+                                    <p class="error-text">Please enter time in HH:MM:SS format.</p>
+                                </div>
+                            </div>
+                        </div>                        
                         <!-- Medical Discomfort -->
                         <div class="field-group" id="medical-group">
                             <label>Any medical discomfort? <span class="required">*</span></label>
