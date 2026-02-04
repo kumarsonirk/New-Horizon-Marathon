@@ -22,7 +22,7 @@ const AGE_CATEGORIES_BY_DISTANCE = {
         { min: 51, max: Infinity, displayLabel: "51 years of age & above", valueLabel: "51+" },
     ],
     '5k': [
-        { min: 12, max: 17, displayLabel: "12 to 17 years of age", valueLabel: "12-17" },
+        { min: 14, max: 17, displayLabel: "14 to 17 years of age", valueLabel: "14-17" },
         { min: 18, max: 30, displayLabel: "18 to 30 years of age", valueLabel: "18-30" },
         { min: 31, max: 40, displayLabel: "31 to 40 years of age", valueLabel: "31-40" },
         { min: 41, max: 50, displayLabel: "41 to 50 years of age", valueLabel: "41-50" },
@@ -189,14 +189,36 @@ document.querySelectorAll('input[name="category"]').forEach(radio => {
         updateAgeAndDistanceInfo();
         const pastRunContainer = document.getElementById('past-run-container');
         const hasRunBeforeRadios = form.querySelectorAll('input[name="hasRunBefore"]');
+        const couponCodeGroup = document.getElementById('couponCodeGroup');
+        const couponCodeInput = document.querySelector('input[name="couponCode"]');
+        const couponErrorText = couponCodeGroup ? couponCodeGroup.querySelector('.error-text') : null;
 
         const selectedCategory = form.querySelector('input[name="category"]:checked');
+        const selectedDistance = selectedCategory ? selectedCategory.value : null;
+
         if (selectedCategory) {
             pastRunContainer.style.display = 'flex';
             hasRunBeforeRadios.forEach(r => r.setAttribute('required', 'required'));
+
+            // Logic for Coupon Code visibility
+            if (selectedDistance === '3k') {
+                if (couponCodeGroup) couponCodeGroup.style.display = 'none';
+                if (couponCodeInput) {
+                    couponCodeInput.value = ''; // Clear value when hidden
+                    couponCodeInput.removeAttribute('required'); // Ensure it's not required
+                    couponCodeInput.classList.remove('input-error'); // Clear error styling
+                }
+                if (couponCodeGroup) couponCodeGroup.classList.remove('has-error'); // Clear parent error styling
+                if (couponErrorText) couponErrorText.style.display = 'none'; // Hide error message
+            } else {
+                if (couponCodeGroup) couponCodeGroup.style.display = 'block';
+                // No specific 'required' attribute added here for coupon, as it's optional
+            }
+
         } else {
             pastRunContainer.style.display = 'none';
             hasRunBeforeRadios.forEach(r => r.removeAttribute('required'));
+            if (couponCodeGroup) couponCodeGroup.style.display = 'block'; // Default to visible if no category selected
         }
         updateSubmitButtonState(); // Update submit button state after category change
     });

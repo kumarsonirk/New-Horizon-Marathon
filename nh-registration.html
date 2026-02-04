@@ -62,7 +62,7 @@
                 </div>
             </div>
         
-            <form id="registrationForm" action="process_payment1.php" method="post" novalidate>
+            <form id="registrationForm" action="process_payment.php" method="post" novalidate>
             
                 <!-- SECTION 1: Personal Information -->
                 <section id="step1" class="form-card step-transition">
@@ -130,13 +130,6 @@
                             </select>
                             <p class="error-text">Please select a T-shirt size.</p>
                         </div>
-
-                        <div class="field-group sm-span-2">
-                            <label>Coupon Code</label>
-                            <input type="text" name="couponCode" maxlength="12" placeholder="Enter 'NH' + 10 digits">
-                            <span>(Enter coupon code to get a discount)</span>
-                            <p class="error-text">Coupon code must start with "NH" followed by 10 digits.</p>
-                        </div>
                     </div>
 
                     <div class="btn-container">
@@ -180,7 +173,15 @@
                             <span id="ageDisplay" class="age-display-text"></span>
                             <a href="assets/PODIUM FINISHERS FROM THE RACE.pdf" target="_blank" class="pdf-link">View Age Categories</a>
                         </div>
+
                         <input type="hidden" name="ageCategoryRange" id="ageCategoryRangeInput">
+
+                        <div class="field-group sm-span-2" id="couponCodeGroup">
+                            <label>Coupon Code</label>
+                            <input type="text" name="couponCode" maxlength="12" placeholder="Enter 'NH' and followed 10 digits">
+                            <span>(Enter coupon code to get a discount)</span>
+                            <p class="error-text">Coupon code must start with "NH" followed by 10 digits.</p>
+                        </div>
                         <!-- Past Run Details -->
                         <div id="past-run-container" style="display: none; margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1.5rem;">
                             <div class="field-group" id="past-run-group">
@@ -272,13 +273,13 @@
                         <div class="sm-span-2" id="terms-group">
                             <div class="terms-wrapper" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; background: var(--bg-body); padding: 1rem; border-radius: 0.5rem;">
                                 <div style="display: flex; gap: 1rem; align-items: flex-start;">
-                                    <input type="checkbox" id="termsConfirm1" class="terms-checkbox" required style="flex-shrink:0; width: 1.25rem; height: 1.25rem; margin-top: 0.2rem;">
+                                    <input type="checkbox" id="termsConfirm1" name="termsConfirm1" value="1" class="terms-checkbox" required style="flex-shrink:0; width: 1.25rem; height: 1.25rem; margin-top: 0.2rem;">
                                     <label for="termsConfirm1" style="font-size: 0.8rem; font-weight: 400; color: var(--text-muted); text-transform: none;">
                                         I confirm that all the information provided by me is true and accurate, and that I am medically fit to participate in this physically demanding event.
                                     </label>
                                 </div>
                                 <div style="display: flex; gap: 1rem; align-items: flex-start;">
-                                    <input type="checkbox" id="termsConfirm2" class="terms-checkbox" required style="flex-shrink:0; width: 1.25rem; height: 1.25rem; margin-top: 0.2rem;">
+                                    <input type="checkbox" id="termsConfirm2" name="termsConfirm2" value="1" class="terms-checkbox" required style="flex-shrink:0; width: 1.25rem; height: 1.25rem; margin-top: 0.2rem;">
                                     <label for="termsConfirm2" style="font-size: 0.8rem; font-weight: 400; color: var(--text-muted); text-transform: none;">
                                         I understand and accept that I am participating at my own risk, agree to abide by all rules and instructions issued by the organizers, and consent to receive medical treatment in case of an emergency during the event. <a href="terms-and-conditions.html" target="_blank">Terms and Conditions</a>
                                     </label>
