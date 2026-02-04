@@ -65,3 +65,18 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Mobile Navigation Toggle
+document.addEventListener('DOMContentLoaded', () => {
+    const menuToggle = document.getElementById('mobile-menu');
+    const navLinks = document.querySelector('.nav-links');
+    const mainNav = document.querySelector('.main-nav');
+
+    if (menuToggle && navLinks && mainNav) {
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+            mainNav.classList.toggle('active');
+        });
+    }
+});

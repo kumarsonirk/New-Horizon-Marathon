@@ -51,6 +51,81 @@ nav {
     background: transparent;
 }
 
+.nav-links {
+    display: flex;
+    align-items: center;
+}
+
+.menu-toggle {
+    display: none; /* Hidden by default on larger screens */
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    cursor: pointer;
+    z-index: 1001; /* Ensure it's above other content */
+}
+
+.menu-toggle .bar {
+    width: 100%;
+    height: 3px;
+    background-color: var(--white);
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+/* Animation for menu toggle icon */
+.menu-toggle.active .bar:nth-child(1) {
+    transform: translateY(11px) rotate(45deg);
+}
+
+.menu-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active .bar:nth-child(3) {
+    transform: translateY(-11px) rotate(-45deg);
+}
+
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: flex; /* Show hamburger on mobile */
+    }
+
+    .nav-links {
+        display: none; /* Hide nav links by default on mobile */
+        flex-direction: column;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh; /* Full viewport height */
+        background-color: var(--primary-bg); /* Use a solid background */
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+
+    .nav-links.active {
+        display: flex;
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .nav-links .nav-btn {
+        margin: 1rem 0; /* Adjust spacing for mobile buttons */
+        padding: 15px 40px;
+        font-size: 1.5rem;
+    }
+
+    /* Adjust nav padding when menu is active to avoid content overlap */
+    nav.main-nav.active {
+        padding-right: 5%; /* Keep padding consistent */
+    }
+}
+
 .logo {
     max-width: 100%;
     display: contents !important;
@@ -1094,73 +1169,73 @@ nav {
 
 /* Terms & Condition */
 
- .terms-section {
-            padding: 160px 5% 80px;
-            min-height: 100vh;
-            background: radial-gradient(circle at 50% 0%, #1b1464 0%, var(--primary-bg) 60%);
-        }
-        .terms-card {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 50px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-        }
-        .terms-card h1 {
-            font-size: 3rem;
-            color: var(--accent-pink);
-            margin-bottom: 40px;
-            text-align: center;
-            letter-spacing: 1px;
-        }
-        .terms-list {
-            counter-reset: terms-counter;
-            list-style: none;
-        }
-        .terms-list li {
-            position: relative;
-            margin-bottom: 30px;
-            padding-left: 50px;
-            font-size: 1.1rem;
-            color: rgba(255, 255, 255, 0.9);
-        }
-        .terms-list li::before {
-            counter-increment: terms-counter;
-            content: counter(terms-counter);
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 35px;
-            height: 35px;
-            background: linear-gradient(135deg, var(--accent-pink), var(--accent-coral));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-family: "Barlow Condensed", sans-serif;
-            color: white;
-            font-size: 1.2rem;
-        }
-        .terms-list strong {
-            color: var(--accent-coral);
-            display: block;
-            margin-bottom: 5px;
-            font-size: 1.3rem;
-            font-family: "Barlow Condensed", sans-serif;
-            text-transform: uppercase;
-        }
-        @media (max-width: 768px) {
-            .terms-section {
-                padding-top: 140px;
-            }
-            .terms-card {
-                padding: 30px 20px;
-            }
-            .terms-card h1 {
-                font-size: 2.2rem;
-            }
-        }
+.terms-section {
+    padding: 160px 5% 80px;
+    min-height: 100vh;
+    background: radial-gradient(circle at 50% 0%, #1b1464 0%, var(--primary-bg) 60%);
+}
+.terms-card {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 50px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
+.terms-card h1 {
+    font-size: 3rem;
+    color: var(--accent-pink);
+    margin-bottom: 40px;
+    text-align: center;
+    letter-spacing: 1px;
+}
+.terms-list {
+    counter-reset: terms-counter;
+    list-style: none;
+}
+.terms-list li {
+    position: relative;
+    margin-bottom: 30px;
+    padding-left: 50px;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+.terms-list li::before {
+    counter-increment: terms-counter;
+    content: counter(terms-counter);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 35px;
+    height: 35px;
+    background: linear-gradient(135deg, var(--accent-pink), var(--accent-coral));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-family: "Barlow Condensed", sans-serif;
+    color: white;
+    font-size: 1.2rem;
+}
+.terms-list strong {
+    color: var(--accent-coral);
+    display: block;
+    margin-bottom: 5px;
+    font-size: 1.3rem;
+    font-family: "Barlow Condensed", sans-serif;
+    text-transform: uppercase;
+}
+@media (max-width: 768px) {
+    .terms-section {
+        padding-top: 140px;
+    }
+    .terms-card {
+        padding: 30px 20px;
+    }
+    .terms-card h1 {
+        font-size: 2.2rem;
+    }
+}

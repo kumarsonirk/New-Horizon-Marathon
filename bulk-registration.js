@@ -32,8 +32,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const fileUploadLabel = document.querySelector('label[for="bulk-upload-file"]');
     const filenameSpan = document.getElementById('file-upload-filename');
     const downloadBtn = document.getElementById('downloadTemplateBtn');
+    const termsConfirm1 = document.getElementById('termsConfirm1');
+    const termsConfirm2 = document.getElementById('termsConfirm2');
+    const termsErrorText = document.querySelector('#terms-group .error-text');
 
     let hasDownloadedTemplate = false;
+
+    // Initially disable the submit button
+    submitBtn.disabled = true;
+    termsErrorText.style.display = 'none'; // Hide initial error
+
+    // Enable/disable submit button based on both terms checkboxes
+    const checkTermsAndEnableSubmit = () => {
+        if (termsConfirm1.checked && termsConfirm2.checked) {
+            submitBtn.disabled = false;
+            termsErrorText.style.display = 'none'; // Hide error if both are checked
+        } else {
+            submitBtn.disabled = true;
+        }
+    };
+
+    termsConfirm1.addEventListener('change', checkTermsAndEnableSubmit);
+    termsConfirm2.addEventListener('change', checkTermsAndEnableSubmit);
 
     // Initialize file upload as disabled
     fileInput.disabled = true;
@@ -148,6 +168,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         });
+        
+        // Validate both terms and conditions checkboxes
+        if (!termsConfirm1.checked || !termsConfirm2.checked) {
+            isValid = false;
+            termsErrorText.style.display = 'block'; // Show the error message
+        } else {
+            termsErrorText.style.display = 'none'; // Hide the error message if valid
+        }
 
         return isValid;
     }
