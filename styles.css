@@ -1286,14 +1286,14 @@ nav {
     counter-reset: terms-counter;
     list-style: none;
 }
-.terms-list li {
+.terms-list > li {
     position: relative;
     margin-bottom: 30px;
     padding-left: 50px;
     font-size: 1.1rem;
     color: rgba(255, 255, 255, 0.9);
 }
-.terms-list li::before {
+.terms-list > li::before {
     counter-increment: terms-counter;
     content: counter(terms-counter);
     position: absolute;
@@ -1311,6 +1311,31 @@ nav {
     color: white;
     font-size: 1.2rem;
 }
+
+/* Nested List Styles (Caret Icon) */
+.terms-list ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 15px;
+}
+.terms-list ul li {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+.terms-list ul li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    top: -4px;
+    color: var(--accent-pink);
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1;
+}
+
 .terms-list strong {
     color: var(--accent-coral);
     display: block;
