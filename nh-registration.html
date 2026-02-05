@@ -118,7 +118,9 @@
                         </div>
 
                         <div class="field-group sm-span-2">
-                            <label for="tshirtSize">T-Shirt Size <span class="required">*</span></label>
+                            <label for="tshirtSize">T-Shirt Size <span class="required">*</span>
+                                <a href="#" id="sizeGuideLink" class="size-guide-link" style="margin-left: 10px; font-size: 0.9em; color: var(--primary); text-decoration: underline;">Size Guide</a>
+                            </label>
                             <select id="tshirtSize" name="tshirtSize" required>
                                 <option value="" disabled selected>Select Size</option>
                                 <option value="xs">XS</option>
@@ -297,6 +299,12 @@
                     </div>
                 </section>
             </form>
+        </div>
+    </div>
+    <div id="sizeChartModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <img src="assets/Slider marathon 2026.jpg" alt="T-Shirt Size Chart">
         </div>
     </div>
     <!-- Script file -->

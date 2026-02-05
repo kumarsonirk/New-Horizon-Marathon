@@ -592,3 +592,28 @@ if (idCardInput) {
         }
     });
 }
+
+// Modal functionality for T-Shirt Size Guide
+document.addEventListener('DOMContentLoaded', () => {
+    const sizeGuideLink = document.getElementById('sizeGuideLink');
+    const sizeChartModal = document.getElementById('sizeChartModal');
+    const closeButton = sizeChartModal ? sizeChartModal.querySelector('.close-button') : null;
+
+    if (sizeGuideLink && sizeChartModal && closeButton) {
+        sizeGuideLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            sizeChartModal.classList.add('active');
+        });
+
+        closeButton.addEventListener('click', () => {
+            sizeChartModal.classList.remove('active');
+        });
+
+        // Close the modal if clicking outside the modal content
+        sizeChartModal.addEventListener('click', (e) => {
+            if (e.target === sizeChartModal) {
+                sizeChartModal.classList.remove('active');
+            }
+        });
+    }
+});

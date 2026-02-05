@@ -88,3 +88,73 @@ body {
     transform: skew(-5deg) translateY(-2px);
     box-shadow: 0 10px 15px -3px rgba(255, 107, 0, 0.4);
 }
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 2000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+    backdrop-filter: blur(5px); /* Optional: blur background */
+    -webkit-backdrop-filter: blur(5px); /* Safari support */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+
+.modal.active {
+    display: flex; /* Show the modal */
+}
+
+.modal-content {
+    background-color: var(--bg-card);
+    margin: auto; /* Centered */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative;
+    max-width: 90%; /* Max width for content */
+    max-height: 90%; /* Max height for content */
+    overflow: auto; /* Enable scrolling for content if needed */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-content img {
+    max-width: 100%;
+    max-height: 80vh; /* Adjust as needed */
+    display: block; /* Remove extra space below image */
+    height: auto;
+}
+
+.close-button {
+    color: var(--text-main);
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+    background-color: var(--bg-body);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1; /* Adjust line-height for perfect centering */
+    transition: background-color 0.2s ease;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: var(--primary);
+    background-color: var(--border-color);
+    text-decoration: none;
+    cursor: pointer;
+}
