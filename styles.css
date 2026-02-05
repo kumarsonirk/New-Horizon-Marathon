@@ -753,6 +753,15 @@ nav {
 .premium-acc {
     border-top: 1px solid rgba(255,255,255,0.1);
 }
+.premium-acc p a{
+    color: var(--accent-pink);
+    text-decoration: none;
+}
+
+.premium-acc p a:hover{
+    color: #f1f1f1;
+    text-decoration: none;
+}
 
 .acc-row {
     border-bottom: 1px solid rgba(255,255,255,0.1);
