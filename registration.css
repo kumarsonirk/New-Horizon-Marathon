@@ -27,7 +27,7 @@ h1 span {
 
 .header-subtitle {
     font-size: 1.1rem;
-    color: var(--text-muted);
+    color: #fff7ed;
     font-weight: 500;
     max-width: 600px;
     margin: 0 auto;
