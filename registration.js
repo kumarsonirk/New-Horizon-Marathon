@@ -455,48 +455,48 @@ function validateStep(step, displayErrors = true) {
 
 
     // Validate Coupon Code (Optional but must be 'nh' followed by 10 digits if entered)
-    const couponInput = currentSection.querySelector('input[name="couponCode"]');
-    if (couponInput && couponInput.value.trim() !== '') {
+    // const couponInput = currentSection.querySelector('input[name="couponCode"]');
+    // if (couponInput && couponInput.value.trim() !== '') {
 
-        const couponValue = couponInput.value.trim();
-        const couponRegex = /^NH\d{10}$/i;
+    //     const couponValue = couponInput.value.trim();
+    //     const couponRegex = /^NH\d{10}$/i;
 
-        const fieldGroup = couponInput.closest('.field-group');
-        const errorTextElement = fieldGroup?.querySelector('.error-text');
+    //     const fieldGroup = couponInput.closest('.field-group');
+    //     const errorTextElement = fieldGroup?.querySelector('.error-text');
 
-        if (!couponRegex.test(couponValue)) {
+    //     if (!couponRegex.test(couponValue)) {
 
-            isValid = false;
+    //         isValid = false;
 
-            if (displayErrors) {
+    //         if (displayErrors) {
 
-                fieldGroup?.classList.add('has-error');
-                couponInput.classList.add('input-error');
+    //             fieldGroup?.classList.add('has-error');
+    //             couponInput.classList.add('input-error');
 
-                if (errorTextElement) {
-                    errorTextElement.textContent =
-                        'Coupon code must start with "NH" followed by 10 digits.';
-                    errorTextElement.style.display = 'block';
-                }
-            }
+    //             if (errorTextElement) {
+    //                 errorTextElement.textContent =
+    //                     'Coupon code must start with "NH" followed by 10 digits.';
+    //                 errorTextElement.style.display = 'block';
+    //             }
+    //         }
 
-        } else {
-            // Valid coupon → remove error
+    //     } else {
+    //         // Valid coupon → remove error
 
-            if (displayErrors) {
+    //         if (displayErrors) {
 
-                const fieldGroup = couponInput.closest('.field-group');
-                const errorTextElement = fieldGroup?.querySelector('.error-text');
+    //             const fieldGroup = couponInput.closest('.field-group');
+    //             const errorTextElement = fieldGroup?.querySelector('.error-text');
 
-                fieldGroup?.classList.remove('has-error');
-                couponInput.classList.remove('input-error');
+    //             fieldGroup?.classList.remove('has-error');
+    //             couponInput.classList.remove('input-error');
 
-                if (errorTextElement) {
-                    errorTextElement.style.display = 'none';
-                }
-            }
-        }
-    }
+    //             if (errorTextElement) {
+    //                 errorTextElement.style.display = 'none';
+    //             }
+    //         }
+    //     }
+    // }
 
     return isValid;
 }
