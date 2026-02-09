@@ -73,6 +73,13 @@
                         <p>Who will be crossing the finish line?</p>
                     </div>
 
+                    <div class="field-group sm-span-2" id="couponCodeGroup" style="padding-bottom: 15px;">
+                        <label>Enter USN</label>
+                        <input type="text" name="couponCode" maxlength="12" placeholder="1NH19CS001">
+                        <span>(Enter USN to get a discount)</span>
+                        <p class="error-text">Enter Your USN.</p>
+                    </div>
+
                     <div class="grid grid-cols-2">
                         <div class="field-group">
                             <label>First Name <span class="required">*</span></label>
@@ -80,8 +87,8 @@
                             <p class="error-text">First name is required.</p>
                         </div>
                         <div class="field-group">
-                            <label>Last Name <span class="required">*</span></label>
-                            <input type="text" name="lastName" required placeholder="Enter Your Last Name">
+                            <label>Last Name</label>
+                            <input type="text" name="lastName" placeholder="Enter Your Last Name">
                             <p class="error-text">Last name is required.</p>
                         </div>
                         <div class="field-group sm-span-2">
@@ -164,7 +171,7 @@
                                     <span class="card-title">5K</span>
                                     <span class="card-sub">Intermediate</span>
                                 </label>
-                                <label class="card-radio">
+                                <label class="card-radio category-center">
                                     <input type="radio" name="category" value="10k">
                                     <span class="card-title">10K</span>
                                     <span class="card-sub">Challenge</span>
@@ -180,12 +187,6 @@
 
                         <input type="hidden" name="ageCategoryRange" id="ageCategoryRangeInput">
 
-                        <div class="field-group sm-span-2" id="couponCodeGroup">
-                            <label>Enter USN</label>
-                            <input type="text" name="couponCode" maxlength="12" placeholder="1NH19CS001">
-                            <span>(Enter USN to get a discount)</span>
-                            <p class="error-text">Enter Your USN.</p>
-                        </div>
                         <!-- Past Run Details -->
                         <div id="past-run-container" style="display: none; margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1.5rem;">
                             <div class="field-group" id="past-run-group">

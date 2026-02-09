@@ -261,6 +261,15 @@ input:focus, textarea:focus {
     gap: 1rem;
 }
 
+/* Mobile only */
+@media (max-width: 768px) {
+  .category-grid .card-radio.category-center {
+    grid-column: 1 / -1;     /* full row */
+    justify-self: center;   /* center card */
+    min-width: 140px;       /* same width as others */
+  }
+}
+
 .card-radio {
     position: relative;
     background: white;

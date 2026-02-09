@@ -44,7 +44,7 @@ function getCategoryRange(age, distance, forDisplay = true) {
     for (const category of categories) {
         if (age >= category.min && age <= category.max) {
             if (distance === '3k' && forDisplay) {
-                 return "6 years of age & above (Fun Run - No podium categories)";
+                 return "6 years of age & above (Fun Run - No podium categories) <br /> No Discount for 3K Run";
             }
             return forDisplay ? category.displayLabel : category.valueLabel;
         }
@@ -168,7 +168,7 @@ function updateAgeAndDistanceInfo() {
     if (categoryAge >= 6) {
         categoryOptions['3k'].style.display = 'block';
     }
-    if (categoryAge >= 12) {
+    if (categoryAge >= 14) {
         categoryOptions['5k'].style.display = 'block';
     }
     if (categoryAge >= 14) {
@@ -189,9 +189,9 @@ document.querySelectorAll('input[name="category"]').forEach(radio => {
         updateAgeAndDistanceInfo();
         const pastRunContainer = document.getElementById('past-run-container');
         const hasRunBeforeRadios = form.querySelectorAll('input[name="hasRunBefore"]');
-        const couponCodeGroup = document.getElementById('couponCodeGroup');
-        const couponCodeInput = document.querySelector('input[name="couponCode"]');
-        const couponErrorText = couponCodeGroup ? couponCodeGroup.querySelector('.error-text') : null;
+        // const couponCodeGroup = document.getElementById('couponCodeGroup');
+        // const couponCodeInput = document.querySelector('input[name="couponCode"]');
+        // const couponErrorText = couponCodeGroup ? couponCodeGroup.querySelector('.error-text') : null;
 
         const selectedCategory = form.querySelector('input[name="category"]:checked');
         const selectedDistance = selectedCategory ? selectedCategory.value : null;
@@ -201,24 +201,23 @@ document.querySelectorAll('input[name="category"]').forEach(radio => {
             hasRunBeforeRadios.forEach(r => r.setAttribute('required', 'required'));
 
             // Logic for Coupon Code visibility
-            if (selectedDistance === '3k') {
-                if (couponCodeGroup) couponCodeGroup.style.display = 'none';
-                if (couponCodeInput) {
-                    couponCodeInput.value = ''; // Clear value when hidden
-                    couponCodeInput.removeAttribute('required'); // Ensure it's not required
-                    couponCodeInput.classList.remove('input-error'); // Clear error styling
-                }
-                if (couponCodeGroup) couponCodeGroup.classList.remove('has-error'); // Clear parent error styling
-                if (couponErrorText) couponErrorText.style.display = 'none'; // Hide error message
-            } else {
-                if (couponCodeGroup) couponCodeGroup.style.display = 'block';
-                // No specific 'required' attribute added here for coupon, as it's optional
-            }
+            // if (selectedDistance === '3k') {
+            //     if (couponCodeGroup) couponCodeGroup.style.display = 'none';
+            //     if (couponCodeInput) {
+            //         couponCodeInput.value = ''; // Clear value when hidden
+            //         couponCodeInput.removeAttribute('required'); // Ensure it's not required
+            //         couponCodeInput.classList.remove('input-error'); // Clear error styling
+            //     }
+            //     if (couponCodeGroup) couponCodeGroup.classList.remove('has-error'); // Clear parent error styling
+            //     if (couponErrorText) couponErrorText.style.display = 'none'; // Hide error message
+            // } else {
+            //     if (couponCodeGroup) couponCodeGroup.style.display = 'block';
+            // }
 
         } else {
             pastRunContainer.style.display = 'none';
             hasRunBeforeRadios.forEach(r => r.removeAttribute('required'));
-            if (couponCodeGroup) couponCodeGroup.style.display = 'block'; // Default to visible if no category selected
+            // if (couponCodeGroup) couponCodeGroup.style.display = 'block'; // Default to visible if no category selected
         }
         updateSubmitButtonState(); // Update submit button state after category change
     });
@@ -593,27 +592,39 @@ if (idCardInput) {
     });
 }
 
-// Modal functionality for T-Shirt Size Guide
-document.addEventListener('DOMContentLoaded', () => {
-    const sizeGuideLink = document.getElementById('sizeGuideLink');
-    const sizeChartModal = document.getElementById('sizeChartModal');
-    const closeButton = sizeChartModal ? sizeChartModal.querySelector('.close-button') : null;
+    // Modal functionality for T-Shirt Size Guide
+    document.addEventListener('DOMContentLoaded', () => {
+        const sizeGuideLink = document.getElementById('sizeGuideLink');
+        const sizeChartModal = document.getElementById('sizeChartModal');
+        const closeButton = sizeChartModal ? sizeChartModal.querySelector('.close-button') : null;
 
-    if (sizeGuideLink && sizeChartModal && closeButton) {
-        sizeGuideLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            sizeChartModal.classList.add('active');
-        });
+        if (sizeGuideLink && sizeChartModal && closeButton) {
+            sizeGuideLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                sizeChartModal.classList.add('active');
+            });
 
-        closeButton.addEventListener('click', () => {
-            sizeChartModal.classList.remove('active');
-        });
-
-        // Close the modal if clicking outside the modal content
-        sizeChartModal.addEventListener('click', (e) => {
-            if (e.target === sizeChartModal) {
+            closeButton.addEventListener('click', () => {
                 sizeChartModal.classList.remove('active');
-            }
-        });
-    }
-});
+            });
+
+            // Close the modal if clicking outside the modal content
+            sizeChartModal.addEventListener('click', (e) => {
+                if (e.target === sizeChartModal) {
+                    sizeChartModal.classList.remove('active');
+                }
+            });
+        }
+
+        // Set max date for birthDate input to today
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+        const dd = String(today.getDate()).padStart(2, '0');
+        const todayFormatted = `${yyyy}-${mm}-${dd}`;
+
+        const birthDateInput = document.querySelector('input[name="birthDate"]');
+        if (birthDateInput) {
+            birthDateInput.setAttribute('max', todayFormatted);
+        }
+    });
