@@ -1393,3 +1393,7 @@ nav {
     from { text-shadow: 0 0 5px rgba(204, 255, 0, 0.2); transform: scale(1); }
     to { text-shadow: 0 0 20px rgba(204, 255, 0, 0.8), 0 0 10px rgba(204, 255, 0, 0.6); transform: scale(1.05); color: #fff; }
 }
+
+.group-registration-section p{
+    max-width: 500px;
+}
