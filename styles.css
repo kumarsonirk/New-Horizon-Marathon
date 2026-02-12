@@ -258,7 +258,7 @@ nav {
 }
 
 .marathon_begin {
-    padding: 15px;
+    /* padding: 15px; */
     font-size: 30px;
     text-transform: capitalize;
 }
@@ -1192,6 +1192,18 @@ nav {
     opacity: 0.6;
     filter: grayscale(1);
     transform: scale(1.05);
+}
+
+.vertical-divider {
+    width: 1px;
+    background-color: rgba(255, 255, 255, 0.2);
+    align-self: stretch;
+}
+
+@media (max-width: 768px) {
+    .vertical-divider {
+        display: none;
+    }
 }
 
 /* Lightbox & Route Map Styles */
