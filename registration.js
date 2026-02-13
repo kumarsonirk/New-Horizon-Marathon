@@ -56,7 +56,7 @@ function getCategoryRange(age, distance, forDisplay = true) {
 function calculateChronologicalAge(birthDateString) {
     if (!birthDateString) return 0;
     const birthDate = new Date(birthDateString);
-    const today = new Date();
+    const today = new Date(2026, 2, 8);
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDifference = today.getMonth() - birthDate.getMonth();
     if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
@@ -68,7 +68,7 @@ function calculateChronologicalAge(birthDateString) {
 function getDaysSinceLastBirthday(birthDateString) {
     if (!birthDateString) return null;
     const birthDate = new Date(birthDateString);
-    const today = new Date();
+     const today = new Date(2026, 2, 8);
 
     const lastBirthday = new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate());
     if (lastBirthday > today) {
@@ -84,7 +84,7 @@ function getCategoryAge(birthDateString) {
     if (!birthDateString) return 0;
     const chronologicalAge = calculateChronologicalAge(birthDateString);
     const birthDate = new Date(birthDateString);
-    const today = new Date();
+     const today = new Date(2026, 2, 8);
 
     const lastBirthday = new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate());
     if (lastBirthday > today) {
