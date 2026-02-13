@@ -1182,7 +1182,7 @@ nav {
 }
 
 .sponsors-grid img {
-    max-height: 140px;
+    max-height: 120px;
     opacity: 1;
     filter: grayscale(0);
     transition: all 0.3s ease;
