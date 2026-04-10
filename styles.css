@@ -371,6 +371,26 @@ nav {
     box-shadow: 0 20px 40px rgba(255, 94, 98, 0.4);
 }
 
+.btn-second {
+    padding: 18px 45px;
+    background: transparent;
+    border: 2px solid var(--white);;
+    border-radius: 10px;
+    color: white;
+    text-decoration: none;
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    box-shadow: 0 15px 30px rgba(255, 94, 98, 0.3);
+    transition: 0.3s;
+}
+
+.btn-second:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 40px rgba(255, 94, 98, 0.4);
+}
+
 .hero-timer {
     display: flex;
     gap: 15px;
