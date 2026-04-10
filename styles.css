@@ -269,6 +269,7 @@ nav {
     align-items: center;
     gap: 20px;
     margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
 .hero-cta a {
@@ -1046,6 +1047,14 @@ nav {
 
     .btn-main {
         padding: 15px 25px;
+    }
+
+    .btn-second{
+        padding: 15px 25px;
+    }
+
+    .prize-pool-link{
+        padding: 15px 25px !important;
     }
 
     /* .timer-unit span {
