@@ -353,7 +353,7 @@ nav {
 }
 
 .btn-main {
-    padding: 18px 45px;
+    padding: 18px 44px;
     background: linear-gradient(to right, #ff5e62, #ff9966);
     border-radius: 10px;
     color: white;
@@ -372,7 +372,7 @@ nav {
 }
 
 .btn-second {
-    padding: 18px 45px;
+    padding: 18px 44px;
     background: transparent;
     border: 2px solid var(--white);;
     border-radius: 10px;
