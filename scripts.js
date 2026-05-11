@@ -1,4 +1,4 @@
-const eventDate = new Date("March 08, 2026 05:30:00").getTime();
+const eventDate = new Date("May 17, 2026 05:30:00").getTime();
 const circumference = 2 * Math.PI * 50;
 
 function updateRing(id, percent) {
